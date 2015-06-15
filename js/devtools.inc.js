@@ -2,6 +2,48 @@ function positionateItemEditPopUp(ItemTop) {
 	var $itemEditor = $('.item-editor');
 	$itemEditor.css({top: ItemTop - ( ( $itemEditor.outerHeight() - 80 ) / 2 )});
 }
+
+function findIndex(value, key, arr){
+    var index = -1, i;
+    for( i=0; i<arr.length; i++ ){
+        if( arr[i][key] == value ){
+            index = i;
+            i = arr.length;
+        }
+    }
+
+    return index;
+}
+
+function setArrayValue(parent, children){
+    if( menuDevData[parent].subtree == undefined ){
+        menuDevData[parent].subtree = [];
+    }
+
+    //add it as children
+    menuDevData[parent].subtree.push( menuDevData[children] );
+
+    //remove it from first level
+    menuDevData.splice(children, 1);
+}
+
+function parseMenuThree(data){
+    var i;
+
+    for( i=0; i<data.length; i++ ){
+        if( data[i].parent_id.length > 0 ){
+            var index = findIndex(data[i].parent_id, 'parent_id', data);
+            if(index>-1){
+                setArrayValue(index, i);
+            }
+        }
+    }
+
+    if( arguments.length > 1 ){
+        arguments[1]();
+    }
+}
+
 devtools.inc = {
 	init: function(){
 		// console.log('init');
@@ -59,7 +101,7 @@ devtools.inc = {
 			m[i].url = m[i].url.replace(/{{link}}/g, "default.aspx?s=site");
 
 			//show corporate
-			if(view=='corporate'&&m[i].data.showcorporate){
+			if(view=='corporate'&&m[i].showcorporate){
 				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
 				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
@@ -73,7 +115,7 @@ devtools.inc = {
 
 					mm += '</ul>';
 				}
-			}else if(view=='losite'&&m[i].data.showlosite){
+			}else if(view=='losite'&&m[i].showlosite){
 				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
 				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
@@ -87,7 +129,7 @@ devtools.inc = {
 
 					mm += '</ul>';
 				}
-			}else if(view=='branch'&&m[i].data.showbranch){
+			}else if(view=='branch'&&m[i].showbranch){
 				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
 				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
@@ -281,22 +323,29 @@ devtools.inc = {
 
 
 
-	 	$.ajax({
-		    url: "get.php?id=90&json=true&s=" + currentSite,
-		    success: function(res){
-		    	// console.log(res);
-		      if(typeof res != "object" || res.length==0 || res.toString().length<5 || res.indexOf('<')>-1 || res.indexOf('lorem')>-1){
-		      	console.log("Menu from CRM is empty.");
-		      	devtools.inc.firstTimeMenu();
-		      }else{
-		      	menuData = res;
-		      	menuDevData = res;
-		      	// console.log(menuData);
-		      	console.log("Menu from CRM is loaded successfully.");
-		      	devtools.inc.genMenu();
-		      }
-		    }
-		});
+        $.ajax({
+            url: "get.php?id=90&json=true&s=" + currentSite,
+            success: function(res){
+                // console.log(res);
+                if(typeof res != "object"
+                    || res.length==0 || res.toString().length<5
+                    || res.indexOf('<')>-1 || res.indexOf('lorem')>-1){
+                    console.log("Menu from CRM is empty.");
+                    devtools.inc.firstTimeMenu();
+                }else{
+                    menuData = res;
+                    menuDevData = res;
+                    // console.log(menuData);
+                    console.log("Menu from CRM is loaded successfully.");
+                    function generateMenu(){
+                        devtools.inc.genMenu();
+                        return true;
+                    }
+
+                    parseMenuThree(res, generateMenu);
+                }
+            }
+        });
 	 }, genMenu: function(){
 	 	var items = "";
 	 	menuData = eval(menuData);
@@ -304,27 +353,27 @@ devtools.inc = {
 	 	for(i=0;i<menuData.length;i++){
 		// console.log(menuData[i].name);
 		menuData[i].target = menuData[i].target.length==0 ? "default" : menuData[i].target;
-		menuData[i].data.value = menuData[i].data.value!=undefined ? menuData[i].data.value : "";
+		menuData[i].value = menuData[i].value!=undefined ? menuData[i].value : "";
 
-		if(menuData[i].data.type=="link"){
+		if(menuData[i].type=="link"){
 			menuData[i].url = menuData[i].url.indexOf('//')>-1 || menuData[i].url.indexOf('://')>-1 || menuData[i].url.indexOf('http')>-1 ? menuData[i].url : "http://" + menuData[i].url;
 		}else{
 			//menuData[i].url = menuData[i].url.replace('https://','http://');
 		}
-		items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].url + '" class="item-title" data-target="' + menuData[i].target + '" data-id="' + menuData[i].id + '" data-value="' + menuData[i].data.value + '" data-type="' + menuData[i].data.type + '" data-showbranch="' + menuData[i].data.showbranch + '" data-showcorporate="' + menuData[i].data.showcorporate + '" data-showlosite="' + menuData[i].data.showlosite + '" data-original-title="' + menuData[i].data.original_title + '">' + menuData[i].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].id + '"><i class="devicons icon-remove"></i></a></div></div>';
+		items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].url + '" class="item-title" data-target="' + menuData[i].target + '" data-id="' + menuData[i].id + '" data-value="' + menuData[i].value + '" data-type="' + menuData[i].type + '" data-showbranch="' + menuData[i].showbranch + '" data-showcorporate="' + menuData[i].showcorporate + '" data-showlosite="' + menuData[i].showlosite + '" data-original-title="' + menuData[i].original_title + '">' + menuData[i].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].id + '"><i class="devicons icon-remove"></i></a></div></div>';
 			if(menuData[i].subthree!=undefined&&menuData[i].subthree.length>0){ 
 				items += '<ul>';
 				for(x=0;x<menuData[i].subthree.length;x++){
 					// console.log(menuData[i].subthree[x].name);
 					menuData[i].subthree[x].target = menuData[i].subthree[x].target.length==0 ? "default" : menuData[i].subthree[x].target;
-					menuData[i].subthree[x].data.value = menuData[i].subthree[x].data.value!=undefined ? menuData[i].subthree[x].data.value : "";
+					menuData[i].subthree[x].value = menuData[i].subthree[x].value!=undefined ? menuData[i].subthree[x].value : "";
 					
-					if(menuData[i].subthree[x].data.type=="link"){
+					if(menuData[i].subthree[x].type=="link"){
 						menuData[i].subthree[x].url = menuData[i].url.indexOf('//')>-1 || menuData[i].subthree[x].url.indexOf('://')>-1 || menuData[i].subthree[x].url.indexOf('http')>-1 ? menuData[i].subthree[x].url : /*"http://" +*/ menuData[i].subthree[x].url;
 					}else{
 						menuData[i].subthree[x].url = menuData[i].subthree[x].url.replace('https://','');
 					}
-					items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].subthree[x].url + '" class="item-title" data-target="' + menuData[i].subthree[x].target + '" data-value="' + menuData[i].subthree[x].data.value + '" data-type="' + menuData[i].subthree[x].data.type + '" data-showbranch="' + menuData[i].subthree[x].data.showbranch + '" data-showcorporate="' + menuData[i].subthree[x].data.showcorporate + '" data-showlosite="' + menuData[i].subthree[x].data.showlosite + '" data-original-title="' + menuData[i].subthree[x].data.original_title + '" data-id="' + menuData[i].subthree[x].id + '">' + menuData[i].subthree[x].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="devicons icon-remove"></i></a></div></div></li>';
+					items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].subthree[x].url + '" class="item-title" data-target="' + menuData[i].subthree[x].target + '" data-value="' + menuData[i].subthree[x].value + '" data-type="' + menuData[i].subthree[x].type + '" data-showbranch="' + menuData[i].subthree[x].showbranch + '" data-showcorporate="' + menuData[i].subthree[x].showcorporate + '" data-showlosite="' + menuData[i].subthree[x].showlosite + '" data-original-title="' + menuData[i].subthree[x].original_title + '" data-id="' + menuData[i].subthree[x].id + '">' + menuData[i].subthree[x].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="devicons icon-remove"></i></a></div></div></li>';
 				}
 				items += '</ul>';
 			}

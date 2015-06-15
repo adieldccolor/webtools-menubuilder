@@ -220,6 +220,10 @@ body.open {
     clear: both;
 }
 
+.layer-body{
+    display: none;
+}
+
 .layer-bg, .layer, .layer-body {
     -webkit-transition: all .3s .1s;
     -moz-transition: all .3s .1s;
@@ -234,6 +238,7 @@ body.open {
     -ms-transition: all 0s;
     -o-transition: all 0s;
     transition: all 0s;
+    display: block;
 }
 
 .open .layer-bg, .open .layer {
