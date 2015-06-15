@@ -1,3 +1,7 @@
+function positionateItemEditPopUp(ItemTop) {
+	var $itemEditor = $('.item-editor');
+	$itemEditor.css({top: ItemTop - ( ( $itemEditor.outerHeight() - 80 ) / 2 )});
+}
 devtools.inc = {
 	init: function(){
 		// console.log('init');
@@ -375,10 +379,14 @@ devtools.inc = {
 		}).on('click', '.edit-it', function(){
 			$('.menu-item > div').removeClass('active');
 			$(this).closest('.menu-item').find('div').first().addClass('active');
-			var _id = $(this).attr('data-id');
+			var _id = $(this).attr('data-id'),
+				ItemTop = $(this).closest('li').position().top;
 			Status.quit("editing");
 			Que(function(){
 				devtools.inc.editItem(_id);
+
+				positionateItemEditPopUp(ItemTop);
+
 				Status.add("editing");
 			}, 200);
 		}).on('change', '.item-editor .checkbox input[type="checkbox"]', function(){
