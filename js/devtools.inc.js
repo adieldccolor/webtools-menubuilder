@@ -18,6 +18,7 @@ devtools.inc = {
         });
         $(item).on('sortupdate', function(ui,event){
         	Status.add('nostored');
+			console.log(ui,event);
         });
 
 	}, returnData: function(id){
@@ -29,12 +30,12 @@ devtools.inc = {
 			data = {
 				"name": item.text(),
 				"url": item.attr('data-link'),
-				"target": item.attr('data-target') == "true" ? true : false,
+				"target": item.attr('data-target') == "true",
 				"id": item.attr('data-id'),
 				"data": {
-					"showcorporate": item.attr('data-showcorporate') == "true" ? true : false,
-					"showbranch": item.attr('data-showbranch') == "true" ? true : false,
-					"showlosite": item.attr('data-showlosite') == "true" ? true : false,
+					"showcorporate": item.attr('data-showcorporate') == "true",
+					"showbranch": item.attr('data-showbranch') == "true",
+					"showlosite": item.attr('data-showlosite') == "true",
 					"type": item.attr('data-type'),
 					"original_title": item.attr('data-original-title'),
 					"value": item.attr('data-value')
@@ -55,7 +56,7 @@ devtools.inc = {
 
 			//show corporate
 			if(view=='corporate'&&m[i].data.showcorporate){
-				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0?true:false;
+				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
 				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
 				if(hasSubthree){
@@ -69,7 +70,7 @@ devtools.inc = {
 					mm += '</ul>';
 				}
 			}else if(view=='losite'&&m[i].data.showlosite){
-				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0?true:false;
+				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
 				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
 				if(hasSubthree){
@@ -83,7 +84,7 @@ devtools.inc = {
 					mm += '</ul>';
 				}
 			}else if(view=='branch'&&m[i].data.showbranch){
-				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0?true:false;
+				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
 				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
 				if(hasSubthree){
@@ -97,7 +98,7 @@ devtools.inc = {
 					mm += '</ul>';
 				}
 			}else if(view=='all'){
-				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0?true:false;
+				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
 				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
 				if(hasSubthree){
@@ -153,17 +154,18 @@ devtools.inc = {
 		// return data;
 		return tags;
 	}, editItem: function(id,append){
-		var found = $('.editor .item-title[data-id="' + id + '"]').length > 0 ? true : false,
+		var found = $('.editor .item-title[data-id="' + id + '"]').length > 0,
 			item = $('.editor .item-title[data-id="' + id + '"]');
 			append = append!=undefined ? append : false;
-		if(found){
+		var $itemEditor = $('.item-editor');
+        if(found){
 
 				// console.log(menuData[editIndex]);
-				$('.item-editor').find('[rel="name"]').val(item.text());
-				$('.item-editor').find('[rel="url"]').val(item.attr('data-link'));
-				$('.item-editor').find('[rel="value"]').val(item.attr('data-value'));
-				$('.item-editor').find('[rel="original_title"]').text(item.attr('data-original-title'));
-				$('.item-editor').find('[rel="type"]').text(item.attr('data-type'));
+				$itemEditor.find('[rel="name"]').val(item.text());
+				$itemEditor.find('[rel="url"]').val(item.attr('data-link'));
+				$itemEditor.find('[rel="value"]').val(item.attr('data-value'));
+				$itemEditor.find('[rel="original_title"]').text(item.attr('data-original-title'));
+				$itemEditor.find('[rel="type"]').text(item.attr('data-type'));
 
 
 
@@ -239,11 +241,11 @@ devtools.inc = {
 
 
 
-			$('.item-editor').find('[rel="name"]').val("Item title");
-				$('.item-editor').find('[rel="url"]').val("{{link}}");
-				$('.item-editor').find('[rel="value"]').val("0");
-				$('.item-editor').find('[rel="original_title"]').text("Home");
-				$('.item-editor').find('[rel="type"]').text("common");
+			$itemEditor.find('[rel="name"]').val("Item title");
+				$itemEditor.find('[rel="url"]').val("{{link}}");
+				$itemEditor.find('[rel="value"]').val("0");
+				$itemEditor.find('[rel="original_title"]').text("Home");
+				$itemEditor.find('[rel="type"]').text("common");
 
 
 				$('[rel="target"]').removeClass('checked').find('input[type="checkbox"]').removeAttr('checked');
@@ -276,7 +278,7 @@ devtools.inc = {
 
 
 	 	$.ajax({
-		    url: "menu.json",
+		    url: "get.php?id=90&json=true&s=" + currentSite,
 		    success: function(res){
 		    	// console.log(res);
 		      if(typeof res != "object" || res.length==0 || res.toString().length<5 || res.indexOf('<')>-1 || res.indexOf('lorem')>-1){
@@ -303,7 +305,7 @@ devtools.inc = {
 		if(menuData[i].data.type=="link"){
 			menuData[i].url = menuData[i].url.indexOf('//')>-1 || menuData[i].url.indexOf('://')>-1 || menuData[i].url.indexOf('http')>-1 ? menuData[i].url : "http://" + menuData[i].url;
 		}else{
-			menuData[i].url = menuData[i].url.replace('https://','http://');
+			//menuData[i].url = menuData[i].url.replace('https://','http://');
 		}
 		items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].url + '" class="item-title" data-target="' + menuData[i].target + '" data-id="' + menuData[i].id + '" data-value="' + menuData[i].data.value + '" data-type="' + menuData[i].data.type + '" data-showbranch="' + menuData[i].data.showbranch + '" data-showcorporate="' + menuData[i].data.showcorporate + '" data-showlosite="' + menuData[i].data.showlosite + '" data-original-title="' + menuData[i].data.original_title + '">' + menuData[i].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].id + '"><i class="devicons icon-remove"></i></a></div></div>';
 			if(menuData[i].subthree!=undefined&&menuData[i].subthree.length>0){ 
@@ -314,9 +316,9 @@ devtools.inc = {
 					menuData[i].subthree[x].data.value = menuData[i].subthree[x].data.value!=undefined ? menuData[i].subthree[x].data.value : "";
 					
 					if(menuData[i].subthree[x].data.type=="link"){
-						menuData[i].subthree[x].url = menuData[i].url.indexOf('//')>-1 || menuData[i].subthree[x].url.indexOf('://')>-1 || menuData[i].subthree[x].url.indexOf('http')>-1 ? menuData[i].subthree[x].url : "http://" + menuData[i].subthree[x].url;
+						menuData[i].subthree[x].url = menuData[i].url.indexOf('//')>-1 || menuData[i].subthree[x].url.indexOf('://')>-1 || menuData[i].subthree[x].url.indexOf('http')>-1 ? menuData[i].subthree[x].url : /*"http://" +*/ menuData[i].subthree[x].url;
 					}else{
-						menuData[i].subthree[x].url = menuData[i].subthree[x].url.replace('https://','http://');
+						menuData[i].subthree[x].url = menuData[i].subthree[x].url.replace('https://','');
 					}
 					items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].subthree[x].url + '" class="item-title" data-target="' + menuData[i].subthree[x].target + '" data-value="' + menuData[i].subthree[x].data.value + '" data-type="' + menuData[i].subthree[x].data.type + '" data-showbranch="' + menuData[i].subthree[x].data.showbranch + '" data-showcorporate="' + menuData[i].subthree[x].data.showcorporate + '" data-showlosite="' + menuData[i].subthree[x].data.showlosite + '" data-original-title="' + menuData[i].subthree[x].data.original_title + '" data-id="' + menuData[i].subthree[x].id + '">' + menuData[i].subthree[x].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="devicons icon-remove"></i></a></div></div></li>';
 				}
@@ -388,11 +390,52 @@ devtools.inc = {
 			}else{
 				// console.log(e.keyCode, "not matched");
 			}
-		}).on('click', '.btn-save', function(){
-				if(Status.is("nostored")){
+		}).on('click', '.btn-save', function () {
+
+
+
+
+		    //save item
+		    // console.log(editing, "save");
+		    var name = $('[rel="name"]').val(),
+                url = $('[rel="url"]').val(),
+                value = $('[rel="value"]').val(),
+                original_title = $('[rel="original_title"]').text(),
+                type = $('[rel="type"]').text(),
+                target = $('[rel="target"] input[type="checkbox"]').is(":checked"),
+                showcorporate = $('[rel="showcorporate"] input[type="checkbox"]').is(":checked"),
+                showbranch = $('[rel="showbranch"] input[type="checkbox"]').is(":checked"),
+                showlosite = $('[rel="showlosite"] input[type="checkbox"]').is(":checked");
+
+
+		    var item = $('.editor .item-title[data-id="' + editing + '"]');
+		    // console.log("editing: ", editing, item.length);
+
+		    if (item.length > 0) {
+		        item.text(name);
+		        item.attr('data-link', url);
+		        item.attr('data-type', type);
+		        item.attr('data-target', target);
+		        item.attr('data-value', value);
+		        item.attr('data-showcorporate', showcorporate);
+		        item.attr('data-showbranch', showbranch);
+		        item.attr('data-showlosite', showlosite);
+		        item.attr('data-original-title', original_title);
+
+		    }
+
+
+
+
+
+
+		    if (Status.is("nostored")) {
+		        var m = devtools.inc.parseTree($('.editor > ul > li > div > .item-title'));
 					
 					$.ajax({
-						url: 'menu.json',
+					    url: 'saveContent.php?cid=90&s=' + currentSite,
+					    type: "POST",
+					    data: {"content": JSON.stringify(m)},
 						success: function(data){
 							Status.quit("nostored"); Status.add("stored");
 							Status.quit("editing");
@@ -406,34 +449,7 @@ devtools.inc = {
 				}
 
 
-				//save item
-				// console.log(editing, "save");
-				var name =  			$('[rel="name"]').val(),
-					url = 				$('[rel="url"]').val(),
-					value = 			$('[rel="value"]').val(),
-					original_title = 	$('[rel="original_title"]').text(),
-					type = 				$('[rel="type"]').text(),
-					target = 			$('[rel="target"] input[type="checkbox"]').is(":checked"),
-					showcorporate =		$('[rel="showcorporate"] input[type="checkbox"]').is(":checked"),
-					showbranch =		$('[rel="showbranch"] input[type="checkbox"]').is(":checked"),
-					showlosite =		$('[rel="showlosite"] input[type="checkbox"]').is(":checked");
-
-
-				var item = $('.editor .item-title[data-id="' + editing + '"]');
-				// console.log("editing: ", editing, item.length);
-
-				if(item.length > 0){
-					item.text(name);
-					item.attr('data-link', url);
-					item.attr('data-type', type);
-					item.attr('data-target', target);
-					item.attr('data-value', value);
-					item.attr('data-showcorporate', showcorporate);
-					item.attr('data-showbranch', showbranch);
-					item.attr('data-showlosite', showlosite);
-					item.attr('data-original-title', original_title);
-					
-				}
+			
 
 		}).on('click', '.btn-addplaceholder', function(){
 			if($(this).hasClass('item-append')){
@@ -492,9 +508,11 @@ devtools.inc = {
 					clearTimeout(colas['search']);
 				}
 
+				var q = $(this).val();
+
 				colas['search'] = setTimeout(function(){
 					$.ajax({
-						url: 'contents.json',
+						url: 'contents.php?s=' + currentSite + '&q=' + encodeURI(q),
 						success: function(data){
 							// console.log(data);
 							var r = "";
@@ -547,18 +565,31 @@ devtools.inc = {
 				Status.add("nostored");
 			}, 400);
 		}).on('click', '[rel="deploybtn"]', function(){
-			var deployto = $('[rel="deploy"]').val();
-			$.ajax({
-				url: 'menu.json',
-				success: function(data){
-					console.log('deployed');
-					devtools.redirectTo("home");
-					setTimeout(function(){
-						// alert("Deployment successfully. Menu sent to: " + deployto);
-						Status.notify('Deployment successfully. Menu sent to: ' + deployto);
-					}, 800);
-				}
-			});
+		    var deployto = $('[rel="deploy"]').val();
+
+		    if (deployto == "Production") {
+		        devtools.redirectTo("home");
+		        Status.notify('This demo has no access to ' + deployto + ' server.<br>Fake notification. Keep in mind this is a demo.');
+		    } else {
+
+		       
+                var m = devtools.inc.parseTree($('.editor > ul > li > div > .item-title'));
+                        
+                $.ajax({
+                    url: 'saveContent.aspx?cid=91&s=' + currentSite,
+                    type: "POST",
+                    data: {"content": JSON.stringify(m)},
+                    success: function(data){
+                        console.log('deployed');
+                        devtools.redirectTo("home");
+                        setTimeout(function(){
+                            // alert("Deployment successfully. Menu sent to: " + deployto);
+                            Status.notify('Deployment successfully. Menu sent to: ' + deployto);
+                        }, 800);
+                    }
+                });
+                
+		    }
 		}).on('click', '[rel="close"]', function(){
 			var item = $(this).closest('li'), _id = item.attr('id'); 
 			if(colas[_id]!=undefined){
@@ -578,4 +609,4 @@ devtools.inc = {
 		});
 	 }
 
-}
+};
