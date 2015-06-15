@@ -1,0 +1,33 @@
+{
+	"status": "Ok"
+	, "menu": [
+		[
+			{
+			"title": "deploy",
+			"url": "settings"
+			}, {
+			"title": "sign out",
+			"url": "settings/signout"
+			}
+		], [
+			{
+				"title": "QA",
+				"hint": "Deploy to QA server"
+			}, {
+				"title": "Production",
+				"hint": "Deploy to Production"
+			}
+		]
+	], "dependencies": [
+			{
+			"type": "text/javascript",
+			"url": "js/jquery-ui.js"
+			}, {
+			"type": "text/javascript",
+			"url": "js/jquery.mjs.nestedSortable.js"
+			}, {
+			"type": "text/javascript",
+			"url": "js/devtools.inc.js"
+			}
+		]
+}

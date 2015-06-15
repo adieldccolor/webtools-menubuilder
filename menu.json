@@ -1,0 +1,60 @@
+[
+	{
+		"name": "Home",
+		"url": "{{link}}",
+		"target": false,
+		"id": "menu_036037305276840925",
+		"data": {
+			"showcorporate": true,
+			"showbranch": true,
+			"showlosite": true,
+			"type": "page",
+			"original_title": "Home",
+			"value": 0
+		}, 
+		"subthree": []
+	}, {
+		"name": "Website",
+		"url": "www.google.com",
+		"target": true,
+		"id": "menu_036037305276840966",
+		"data": {
+			"showcorporate": true,
+			"showbranch": false,
+			"showlosite": false,
+			"type": "link",
+			"original_title": "Website",
+			"value": 0
+		}, 
+		"subthree": []
+	}, {
+		"name": "Loan Programs",
+		"url": "{{link}}",
+		"target": false,
+		"id": "menu_0360373052768409",
+		"data": {
+			"showcorporate": true,
+			"showbranch": true,
+			"showlosite": true,
+			"type": "page",
+			"original_title": "Home",
+			"value": 0
+		}, 
+		"subthree": [
+				{
+					"name": "Veteran",
+					"url": "{{link}}&pageid=7",
+					"target": false,
+					"id": "menu_07294575152918696",
+					"data": {
+						"showcorporate": true,
+						"showbranch": true,
+						"showlosite": true,
+						"type": "crm",
+						"original_title": "VA Loan #7",
+						"value": 7
+					}
+				}
+			]
+	}
+]
