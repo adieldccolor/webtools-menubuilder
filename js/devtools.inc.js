@@ -20,6 +20,7 @@ function setArrayValue(parent, children){
         menuDevData[parent].subtree = [];
     }
 
+
     //add it as children
     menuDevData[parent].subtree.push( menuDevData[children] );
 
@@ -27,12 +28,12 @@ function setArrayValue(parent, children){
     menuDevData.splice(children, 1);
 }
 
-function parseMenuThree(data){
+function parseMenuTree(data){
     var i;
 
     for( i=0; i<data.length; i++ ){
         if( data[i].parent_id.length > 0 ){
-            var index = findIndex(data[i].parent_id, 'parent_id', data);
+            var index = findIndex(data[i].parent_id, 'id', data);
             if(index>-1){
                 setArrayValue(index, i);
             }
@@ -102,57 +103,57 @@ devtools.inc = {
 
 			//show corporate
 			if(view=='corporate'&&m[i].showcorporate){
-				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
-				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
-				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
-				if(hasSubthree){
+				var hassubtree = m[i].subtree!=undefined&&m[i].subtree.length>0;
+				mm += '<li id="' + m[i].id + '" ' + (hassubtree?'class="dropdown"':'') + ' >';
+				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hassubtree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hassubtree?' <span class="caret"></span>':'') + '</a>';
+				if(hassubtree){
 					mm += '<ul class="dropdown-menu" role="menu">';
 					
-					for(x=0; x<m[i].subthree.length; x++){
-						m[i].subthree[x].url = m[i].subthree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
-						mm += '<li><a href="' + m[i].subthree[x].url + '" ' + (m[i].subthree[x].target ? 'target="_blank"':'') + '>' + m[i].subthree[x].name + '</a></li>';
+					for(x=0; x<m[i].subtree.length; x++){
+						m[i].subtree[x].url = m[i].subtree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
+						mm += '<li><a href="' + m[i].subtree[x].url + '" ' + (m[i].subtree[x].target ? 'target="_blank"':'') + '>' + m[i].subtree[x].name + '</a></li>';
 					}
 
 					mm += '</ul>';
 				}
 			}else if(view=='losite'&&m[i].showlosite){
-				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
-				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
-				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
-				if(hasSubthree){
+				var hassubtree = m[i].subtree!=undefined&&m[i].subtree.length>0;
+				mm += '<li id="' + m[i].id + '" ' + (hassubtree?'class="dropdown"':'') + ' >';
+				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hassubtree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hassubtree?' <span class="caret"></span>':'') + '</a>';
+				if(hassubtree){
 					mm += '<ul class="dropdown-menu" role="menu">';
 					
-					for(x=0; x<m[i].subthree.length; x++){
-						m[i].subthree[x].url = m[i].subthree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
-						mm += '<li><a href="' + m[i].subthree[x].url + '" ' + (m[i].subthree[x].target ? 'target="_blank"':'') + '>' + m[i].subthree[x].name + '</a></li>';
+					for(x=0; x<m[i].subtree.length; x++){
+						m[i].subtree[x].url = m[i].subtree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
+						mm += '<li><a href="' + m[i].subtree[x].url + '" ' + (m[i].subtree[x].target ? 'target="_blank"':'') + '>' + m[i].subtree[x].name + '</a></li>';
 					}
 
 					mm += '</ul>';
 				}
 			}else if(view=='branch'&&m[i].showbranch){
-				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
-				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
-				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
-				if(hasSubthree){
+				var hassubtree = m[i].subtree!=undefined&&m[i].subtree.length>0;
+				mm += '<li id="' + m[i].id + '" ' + (hassubtree?'class="dropdown"':'') + ' >';
+				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hassubtree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hassubtree?' <span class="caret"></span>':'') + '</a>';
+				if(hassubtree){
 					mm += '<ul class="dropdown-menu" role="menu">';
 					
-					for(x=0; x<m[i].subthree.length; x++){
-						m[i].subthree[x].url = m[i].subthree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
-						mm += '<li><a href="' + m[i].subthree[x].url + '" ' + (m[i].subthree[x].target ? 'target="_blank"':'') + '>' + m[i].subthree[x].name + '</a></li>';
+					for(x=0; x<m[i].subtree.length; x++){
+						m[i].subtree[x].url = m[i].subtree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
+						mm += '<li><a href="' + m[i].subtree[x].url + '" ' + (m[i].subtree[x].target ? 'target="_blank"':'') + '>' + m[i].subtree[x].name + '</a></li>';
 					}
 
 					mm += '</ul>';
 				}
 			}else if(view=='all'){
-				var hasSubthree = m[i].subthree!=undefined&&m[i].subthree.length>0;
-				mm += '<li id="' + m[i].id + '" ' + (hasSubthree?'class="dropdown"':'') + ' >';
-				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hasSubthree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hasSubthree?' <span class="caret"></span>':'') + '</a>';
-				if(hasSubthree){
+				var hassubtree = m[i].subtree!=undefined&&m[i].subtree.length>0;
+				mm += '<li id="' + m[i].id + '" ' + (hassubtree?'class="dropdown"':'') + ' >';
+				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hassubtree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hassubtree?' <span class="caret"></span>':'') + '</a>';
+				if(hassubtree){
 					mm += '<ul class="dropdown-menu" role="menu">';
 					
-					for(x=0; x<m[i].subthree.length; x++){
-						m[i].subthree[x].url = m[i].subthree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
-						mm += '<li><a href="' + m[i].subthree[x].url + '" ' + (m[i].subthree[x].target ? 'target="_blank"':'') + '>' + m[i].subthree[x].name + '</a></li>';
+					for(x=0; x<m[i].subtree.length; x++){
+						m[i].subtree[x].url = m[i].subtree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
+						mm += '<li><a href="' + m[i].subtree[x].url + '" ' + (m[i].subtree[x].target ? 'target="_blank"':'') + '>' + m[i].subtree[x].name + '</a></li>';
 					}
 
 					mm += '</ul>';
@@ -185,8 +186,8 @@ devtools.inc = {
 				for(x=0; x<subtree.length; x++){
 					subtreetags.push(devtools.inc.returnData(subtree.eq(x).attr('data-id')));
 				}
-				// data.subthree = devtools.inc.parseTree(subtree);
-				data.subthree = subtreetags;
+				// data.subtree = devtools.inc.parseTree(subtree);
+				data.subtree = subtreetags;
 		
 			}else{
 				// alert(data.toString(), "has not subitems");
@@ -342,13 +343,17 @@ devtools.inc = {
                         return true;
                     }
 
-                    parseMenuThree(res, generateMenu);
+                    parseMenuTree(menuDevData, generateMenu);
                 }
             }
         });
 	 }, genMenu: function(){
 	 	var items = "";
-	 	menuData = eval(menuData);
+	 	//menuData = eval(menuData);
+        menuData = menuDevData;
+
+        console.log(menuData);
+
 	 	// console.log(menuData[0].name);
 	 	for(i=0;i<menuData.length;i++){
 		// console.log(menuData[i].name);
@@ -361,19 +366,19 @@ devtools.inc = {
 			//menuData[i].url = menuData[i].url.replace('https://','http://');
 		}
 		items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].url + '" class="item-title" data-target="' + menuData[i].target + '" data-id="' + menuData[i].id + '" data-value="' + menuData[i].value + '" data-type="' + menuData[i].type + '" data-showbranch="' + menuData[i].showbranch + '" data-showcorporate="' + menuData[i].showcorporate + '" data-showlosite="' + menuData[i].showlosite + '" data-original-title="' + menuData[i].original_title + '">' + menuData[i].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].id + '"><i class="devicons icon-remove"></i></a></div></div>';
-			if(menuData[i].subthree!=undefined&&menuData[i].subthree.length>0){ 
+			if(menuData[i].subtree!=undefined&&menuData[i].subtree.length>0){ 
 				items += '<ul>';
-				for(x=0;x<menuData[i].subthree.length;x++){
-					// console.log(menuData[i].subthree[x].name);
-					menuData[i].subthree[x].target = menuData[i].subthree[x].target.length==0 ? "default" : menuData[i].subthree[x].target;
-					menuData[i].subthree[x].value = menuData[i].subthree[x].value!=undefined ? menuData[i].subthree[x].value : "";
+				for(x=0;x<menuData[i].subtree.length;x++){
+					// console.log(menuData[i].subtree[x].name);
+					menuData[i].subtree[x].target = menuData[i].subtree[x].target.length==0 ? "default" : menuData[i].subtree[x].target;
+					menuData[i].subtree[x].value = menuData[i].subtree[x].value!=undefined ? menuData[i].subtree[x].value : "";
 					
-					if(menuData[i].subthree[x].type=="link"){
-						menuData[i].subthree[x].url = menuData[i].url.indexOf('//')>-1 || menuData[i].subthree[x].url.indexOf('://')>-1 || menuData[i].subthree[x].url.indexOf('http')>-1 ? menuData[i].subthree[x].url : /*"http://" +*/ menuData[i].subthree[x].url;
+					if(menuData[i].subtree[x].type=="link"){
+						menuData[i].subtree[x].url = menuData[i].url.indexOf('//')>-1 || menuData[i].subtree[x].url.indexOf('://')>-1 || menuData[i].subtree[x].url.indexOf('http')>-1 ? menuData[i].subtree[x].url : /*"http://" +*/ menuData[i].subtree[x].url;
 					}else{
-						menuData[i].subthree[x].url = menuData[i].subthree[x].url.replace('https://','');
+						menuData[i].subtree[x].url = menuData[i].subtree[x].url.replace('https://','');
 					}
-					items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].subthree[x].url + '" class="item-title" data-target="' + menuData[i].subthree[x].target + '" data-value="' + menuData[i].subthree[x].value + '" data-type="' + menuData[i].subthree[x].type + '" data-showbranch="' + menuData[i].subthree[x].showbranch + '" data-showcorporate="' + menuData[i].subthree[x].showcorporate + '" data-showlosite="' + menuData[i].subthree[x].showlosite + '" data-original-title="' + menuData[i].subthree[x].original_title + '" data-id="' + menuData[i].subthree[x].id + '">' + menuData[i].subthree[x].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].subthree[x].id + '"><i class="devicons icon-remove"></i></a></div></div></li>';
+					items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].subtree[x].url + '" class="item-title" data-target="' + menuData[i].subtree[x].target + '" data-value="' + menuData[i].subtree[x].value + '" data-type="' + menuData[i].subtree[x].type + '" data-showbranch="' + menuData[i].subtree[x].showbranch + '" data-showcorporate="' + menuData[i].subtree[x].showcorporate + '" data-showlosite="' + menuData[i].subtree[x].showlosite + '" data-original-title="' + menuData[i].subtree[x].original_title + '" data-id="' + menuData[i].subtree[x].id + '">' + menuData[i].subtree[x].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].subtree[x].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].subtree[x].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].subtree[x].id + '"><i class="devicons icon-remove"></i></a></div></div></li>';
 				}
 				items += '</ul>';
 			}
@@ -406,9 +411,9 @@ devtools.inc = {
 	 			if(menuDevData[i].id==id){
 	 				menuDevData.splice(i,1);
 	 			}else{
-	 				for(x=0; x<menuDevData[i].subthree.length; x++){
-	 					if(menuDevData[i].subthree[x].id==id){
-	 						menuDevData[i].subthree.splice(x,1);
+	 				for(x=0; x<menuDevData[i].subtree.length; x++){
+	 					if(menuDevData[i].subtree[x].id==id){
+	 						menuDevData[i].subtree.splice(x,1);
 	 					}
 	 				}
 	 			}
