@@ -11,7 +11,8 @@
         "original_title": "Home",
         "value": 0,
         "parent_id": "",
-        "subtree": []
+        "subtree": [],
+        "index": 0
     },
     {
         "name": "Website",
@@ -25,7 +26,8 @@
         "original_title": "Website",
         "value": 0,
         "parent_id": "",
-        "subtree": []
+        "subtree": [],
+        "index": 1
     },
     {
         "name": "Loan Programs",
@@ -39,7 +41,8 @@
         "original_title": "Home",
         "value": 0,
         "parent_id": "",
-        "subtree": []
+        "subtree": [],
+        "index": 2
     },
     {
         "name": "Veteran",
@@ -53,6 +56,7 @@
         "original_title": "VA Loan #7",
         "value": 7,
         "parent_id": "menu_0360373052768409",
-        "subtree": []
+        "subtree": [],
+        "index": 0
     }
 ]

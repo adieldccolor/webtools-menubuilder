@@ -1,6 +1,40 @@
+// Function:        sortData
+// Description:     Sort array according to sortMode
+// Parameters:      j: array containing the items to be sorted
+//                  sortMode: mode to sort; name or date; ascending or descending
+// Return:          Sorted array
+function sortData(entries, sortMode) {
+    if (sortMode === "none")
+        return;
+
+    function ascSort(a, b) {
+        return Number(a.index) - Number(b.index);
+    }
+    function descSort(a, b) {
+        return Number(b.index) - Number(a.index);
+    }
+
+    switch (sortMode) {
+        case "ASC":
+            entries.sort(ascSort);
+            break;
+        case "DESC":
+            entries.sort(descSort);
+            break;
+    }
+
+    return entries;
+}
+
+
+// Function:        positionateItemEditPopUp
+// Description:     set top position centered in the item is being edited
+// Parameters:      ItemTop: int or string plus units
+// Return:          true
 function positionateItemEditPopUp(ItemTop) {
 	var $itemEditor = $('.item-editor');
 	$itemEditor.css({top: ItemTop - ( ( $itemEditor.outerHeight() - 80 ) / 2 )});
+    return true;
 }
 
 function findIndex(value, key, arr){
@@ -79,14 +113,15 @@ devtools.inc = {
 				"url": item.attr('data-link'),
 				"target": item.attr('data-target') == "true",
 				"id": item.attr('data-id'),
-				"data": {
-					"showcorporate": item.attr('data-showcorporate') == "true",
-					"showbranch": item.attr('data-showbranch') == "true",
-					"showlosite": item.attr('data-showlosite') == "true",
-					"type": item.attr('data-type'),
-					"original_title": item.attr('data-original-title'),
-					"value": item.attr('data-value')
-				}
+                "showcorporate": item.attr('data-showcorporate') == "true",
+                "showbranch": item.attr('data-showbranch') == "true",
+                "showlosite": item.attr('data-showlosite') == "true",
+                "type": item.attr('data-type'),
+                "original_title": item.attr('data-original-title'),
+                "value": item.attr('data-value'),
+                "parent_id": "",
+                "index": 0,
+                "subtree": []
 			}
 		}
 
@@ -95,6 +130,11 @@ devtools.inc = {
 	}, previewMenu: function(view){
 
 		var m = devtools.inc.parseTree($('.editor > ul > li > div > .item-title')), mm = "";
+        menuDevData = m;
+        menuData = menuDevData;
+        parseMenuTree(m);
+        m = menuDevData;
+
 		// console.log(m);
 		for(i=0; i<m.length; i++){
 
@@ -178,6 +218,9 @@ devtools.inc = {
 			var subtree = ul.eq(i).closest('li').find('ul').find('li').find('.item-title');
 			id = ul.eq(i).attr('data-id');
 			data = devtools.inc.returnData(id);
+            data.index = i;
+
+			/* do not generate subtree, but push items as first level with parent reference
 			if(subtree.length > 0){
 				// alert("has subitems");
 				// alert(subtree.length);
@@ -191,7 +234,20 @@ devtools.inc = {
 		
 			}else{
 				// alert(data.toString(), "has not subitems");
-			}
+			}*/
+
+            if( subtree.length > 0 )
+            {
+                for( x=0; x<subtree.length; x++ ){
+                    var children = devtools.inc.returnData(subtree.eq(x).attr('data-id'));
+                    children.parent_id = id;
+                    children.index = x;
+                    tags.push(children);
+                }
+            }
+
+
+
 			tags.push(data);
 		
 		// });
@@ -492,7 +548,7 @@ devtools.inc = {
 
 
 		    if (Status.is("nostored")) {
-		        var m = devtools.inc.parseTree($('.editor > ul > li > div > .item-title'));
+		        var m = devtools.inc.parseTree($('.editor > ul li > div > .item-title'));
 					
 					$.ajax({
 					    url: 'saveContent.php?cid=90&s=' + currentSite,
@@ -638,7 +694,7 @@ devtools.inc = {
                 var m = devtools.inc.parseTree($('.editor > ul > li > div > .item-title'));
                         
                 $.ajax({
-                    url: 'saveContent.aspx?cid=91&s=' + currentSite,
+                    url: 'saveContent.php?cid=91&s=' + currentSite,
                     type: "POST",
                     data: {"content": JSON.stringify(m)},
                     success: function(data){
