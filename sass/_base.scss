@@ -27,6 +27,10 @@ body.open {
     float: left;
 }
 
+.navigation .left-nav ul li{
+    padding: 0 5px 0 0;
+}
+
 .navigation .right-nav, .navigation .right-nav ul {
     float: right;
 }
@@ -38,15 +42,15 @@ body.open {
 }
 
 .navigation .left-nav img {
-    padding-right: 20px;
+    padding-right: 5px;
 }
 
-.navigation .left-nav ul li a, .navigation .right-nav ul li a {
+.navigation .left-nav > ul > li a, .navigation .right-nav ul li a {
     display: block;
     text-decoration: none;
 }
 
-.navigation .left-nav ul li a.icon-tools {
+.navigation .left-nav > ul > li a.icon-tools {
     height: 40px;
     background-color: #a8abc8;
     color: #fff;
@@ -55,18 +59,18 @@ body.open {
     padding: 0 20px;
 }
 
-.navigation .left-nav ul li a.icon-tools.icon {
+.navigation .left-nav > ul > li a.icon-tools.icon {
     padding: 0 15px;
 }
 
-.navigation .left-nav ul li a.icon-tools span {
+.navigation .left-nav > ul > li a.icon-tools span {
     font-family: "Plaster", serif;
     line-height: 0px;
     position: relative;
     top: -2px;
 }
 
-.navigation .left-nav ul li a.icon-tools.icon span {
+.navigation .left-nav > ul > li a.icon-tools.icon span {
     top: 0;
 }
 
@@ -75,7 +79,7 @@ body.open {
     margin-left: 20px;
 }
 
-.navigation .left-nav ul li ul {
+.navigation .left-nav > ul > li > ul {
     position: absolute;
     background: #EFF2FC;
     border-radius: 3px;
@@ -83,24 +87,25 @@ body.open {
     padding: 3px 0px;
     z-index: 99;
     display: none;
+
+    &:hover{
+        display: block;
+    }
 }
 
-.navigation .left-nav ul li:hover ul {
-    display: block;
-}
 
-.navigation .left-nav ul li ul li {
+.navigation .left-nav > ul > li > ul li {
     float: none;
     display: block;
 }
 
-.navigation .left-nav ul li ul li a {
+.navigation .left-nav > ul > li > ul li a {
     color: #A8ABC8;
     padding: 8px 15px 8px 10px;
     font-size: 24px;
 }
 
-.navigation .left-nav ul li ul li a:hover, .navigation .left-nav ul li ul li a:focus {
+.navigation .left-nav > ul > li > ul li a:hover, .navigation .left-nav > ul > li > ul li a:focus {
     background-color: #A8AFC7;
     color: #FFF;
 }
@@ -142,6 +147,13 @@ body.open {
     -o-transform: scale(0.5);
     transform: scale(0.5);
     margin-left: -20px;
+
+    span{
+        color: #FFF;
+        line-height: 50px;
+        display: inline-block;
+        padding-right: 10px;
+    }
 }
 
 .herolead ul.tabs li a {
@@ -393,8 +405,7 @@ body.open {
     background: #DBE2E7;
     height: -2px;
     z-index: 99;
-    width: 90%;
-    max-width: 400px;
+    width: 100%;
     box-shadow: 0px 0px 5px #000;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.08);
     overflow: hidden;
@@ -423,4 +434,32 @@ body.open {
     -ms-animation: progress .9s infinite;
     -o-animation: progress .9s infinite;
     animation: progress .9s infinite;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+ Dropdowns
+*/
+.select2-container--default .select2-selection--single {
+    background-color: #A8ABC8;
+    border: 1px solid #A8ABC8;
+    border-radius: 4px;
+}
+
+.select2-container .select2-selection--single, .select2-container--default .select2-selection--single .select2-selection__arrow{
+    height: 40px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #FFF;
+    line-height: 35px;
 }

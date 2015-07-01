@@ -390,8 +390,9 @@ devtools.inc = {
                     console.log("Menu from CRM is empty.");
                     devtools.inc.firstTimeMenu();
                 }else{
-                    menuData = res;
-                    menuDevData = res;
+                    menuData = res[0].data;
+                    menuDevData = res[0].data;
+					menu = res;
                     // console.log(menuData);
                     console.log("Menu from CRM is loaded successfully.");
                     function generateMenu(){

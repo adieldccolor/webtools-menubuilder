@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DEV|TOOLS</title>
 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400,300|Open+Sans+Condensed:300|Plaster'>
+<link rel="stylesheet" href="css/select2.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,14 +17,27 @@
 		<div class="left-nav">
 			<ul>
 				<li><a href="#/home"><img src="img/logo.png" alt=""></a></li>
-				<li><a href="#/home" class="icon-tools icon"><span class="devicons icon-toolsgrid"></span></a>
-					<ul>
-						<li><a href="#/home">MENU BUILDER</a></li>
-						<li><a href="#/home">SCHEME PICKER</a></li>
-						<li><a href="#/home">MOBILE SIMULATOR</a></li>
-						<li><a href="#/home">CONTENT EDITOR</a></li>
-					</ul>
+				<li><a href="#/home" class="icon-tools icon"><span class="devicons icon-toolsgrid"></span></a></li>
+
+                <li>
+					<select name="menu" id="menu" class="form-control select-dropdown" style="min-width: 150px">
+						<option value="-1">Create new +</option>
+						<option value="0">Main menu</option>
+						<option value="1">Footer menu</option>
+					</select>
 				</li>
+
+                <li>
+					<select name="show" id="show" class="form-control select-dropdown" style="min-width: 200px">
+						<option value="all">Show all</option>
+						<option value="corporate">Show only for corporate</option>
+						<option value="loan">Show only for officers</option>
+						<option value="branch">Show only for branches</option>
+					</select>
+				</li>
+
+
+
 			</ul>
 		</div>
 		<div class="right-nav">
@@ -343,6 +357,7 @@
 <script src="js/jquery-1.11.0.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/director.min.js"></script>
+<script src="js/select2.min.js"></script>
 <script src="js/devtools.js"></script>
 </body>
 </html>
