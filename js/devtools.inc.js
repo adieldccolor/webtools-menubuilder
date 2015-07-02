@@ -382,6 +382,10 @@ devtools.inc = {
 		$('.item-editor [rel="name"]').trigger('focus');
 	}, firstTimeMenu: function(){
 		alert("Trying to find menu settings in DB we found that the table content is being used for something else, do you want to erase the content and format to use it to save menu settings?");
+	}, toggleMenus: function(){
+        var menu = $('#menu').val();
+        $('.editor > ul').removeClass('active');
+        $('.editor > ul').eq(menu).addClass('active');
 	}, loadMenu: function(){
 	 	// console.log(menuData);
 	 	var _self = this;
@@ -469,6 +473,11 @@ devtools.inc = {
 	 }, events: function(){
 
 	 	$('.body')
+
+            .on('change', '#menu', function(){
+                devtools.inc.toggleMenus();
+            })
+
             .on('click', '.move-children', function(){
                 var item = $(this).closest('li');
 
