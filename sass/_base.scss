@@ -1,25 +1,69 @@
-body {
-    background-color: #dedede;
+.body {
     font: 24px/20px 'Open Sans Condensed', sans-serif;
     color: #a9a9a9;
     opacity: 0.5;
 }
 
-body.loading {
+
+.body.loading {
     opacity: 0.8;
 }
 
-body.ready {
+.body.ready {
     opacity: 1;
 }
 
+
+.body{
+    .pull-left{
+        float: left;
+    }
+
+    .pull-right{
+        float: right;
+    }
+
+    .text-left{
+        text-align: left;
+    }
+
+    .text-right{
+        text-align: right;
+    }
+
+    .text-center{
+        text-align: center;
+    }
+
+    a{
+        color: #286090;
+    }
+
+    .form-group{
+        margin-bottom: 10px;
+
+        label{
+            cursor: pointer;
+        }
+    }
+
+    h1{
+        margin: 5px 0 15px;
+    }
+}
+
+
 .navigation {
-    height: 70px;
-    background-color: #fff;
+    min-height: 40px;
+    background-color: #e5e5e5;
     padding: 15px 0;
 }
 
-body.open {
+.layer .navigation{
+    background-color: #fff;
+}
+
+.body.open {
     overflow: hidden;
 }
 
@@ -113,6 +157,7 @@ body.open {
 .herolead {
     background-color: #7780ad;
     padding: 20px 0;
+    display: none;
 }
 
 .signedout .herolead {
@@ -261,7 +306,7 @@ body.open {
     transition: all .4s;
 }
 
-.layer .layer-body .container {
+.layer .layer-body .content-container {
     -webkit-transition: all .4s;
     -moz-transition: all .4s;
     -ms-transition: all .4s;
@@ -269,7 +314,7 @@ body.open {
     transition: all .4s;
 }
 
-.open .layer .layer-body .container {
+.open .layer .layer-body .content-container {
     -webkit-transition: all .4s .4s;
     -moz-transition: all .4s .4s;
     -ms-transition: all .4s .4s;
@@ -285,7 +330,7 @@ body.open {
     right: 0;
     bottom: 0;
     opacity: 0;
-    z-index: 8;
+    z-index: -1;
     visibility: hidden;
 }
 
@@ -301,12 +346,12 @@ body.open {
     opacity: 0;
 }
 
-.layer .container {
+.layer .content-container {
     height: 100%;
     overflow: auto;
 }
 
-.layer .container .layer-body {
+.layer .content-container .layer-body {
     position: absolute;
     width: 100%;
     background-color: #fff;
@@ -316,13 +361,13 @@ body.open {
     overflow: auto;
 }
 
-.layer .container .layer-body .container {
+.layer .content-container .layer-body .content-container {
     opacity: 0;
     visibility: hidden;
 }
 
-.layer .container .layer-body .container {
-    max-width: 100%;
+.layer .content-container .layer-body .content-container {
+    //max-width: 100%;
     margin: 0;
 }
 
@@ -342,7 +387,7 @@ body.open {
     padding-left: 50px;
 }
 
-.open .layer .layer-body .container {
+.open .layer .layer-body .content-container {
     opacity: 1;
     visibility: visible;
 }
@@ -438,6 +483,22 @@ body.open {
 
 
 
+.content-container{
+    margin: 0 auto;
+    max-width: 1000px;
+
+    &.menu-editor-container{
+        max-width: 800px;
+    }
+
+    @media screen and (max-width: 1025px){
+        margin: 0 20px;
+    }
+}
+
+.only-editor{
+    display: none;
+}
 
 
 

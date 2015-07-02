@@ -1,6 +1,6 @@
 [
     {
-        "name": "navbar",
+        "name": "main menu",
         "id": "navbar-1",
         "data": [
             {
@@ -62,6 +62,42 @@
                 "parent_id": "menu_0360373052768409",
                 "subtree": [],
                 "index": 0
+            }
+        ]
+    },
+    {
+        "name": "footer",
+        "id": "footer-1",
+        "data": [
+            {
+                "name": "Home",
+                "url": "{{link}}",
+                "target": false,
+                "id": "menu_036037305276840922",
+                "showcorporate": true,
+                "showbranch": true,
+                "showlosite": true,
+                "type": "page",
+                "original_title": "Home",
+                "value": 0,
+                "parent_id": "",
+                "subtree": [],
+                "index": 0
+            },
+            {
+                "name": "Website",
+                "url": "www.google.com",
+                "target": true,
+                "id": "menu_036037305276840934",
+                "showcorporate": true,
+                "showbranch": false,
+                "showlosite": false,
+                "type": "link",
+                "original_title": "Website",
+                "value": 0,
+                "parent_id": "",
+                "subtree": [],
+                "index": 1
             }
         ]
     }

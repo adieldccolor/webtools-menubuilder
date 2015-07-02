@@ -1,4 +1,5 @@
-@import "bootstrap.min";
+//@import "bootstrap.min";
+@import "bootstrap-custom";
 @import "base";
 
 .devicons {
@@ -194,6 +195,13 @@
     -o-transition: all .3s;
     transition: all .3s;
 
+    > ul{
+        display: none;
+        &.active{
+            display: block;
+        }
+    }
+
     ul {
         list-style: none;
         margin: 20px 0;
@@ -327,7 +335,7 @@
                     > div {
                         border-top-width: 0px;
                         margin-top: 0;
-                        background-color: #EDEDED;
+                        background-color: #fff;
                     }
 
                     li.ui-sortable-placeholder {
@@ -492,12 +500,15 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     -o-transition: all .4s cubic-bezier(.22, .2, .23, .99);
     transition: all .4s cubic-bezier(.22, .2, .23, .99);
     margin-top: 0;
+
+    position: absolute;
+    left: 50%;
 }
 
 .editing .item-editor {
     opacity: 1;
     visibility: visible;
-    left: 0px;
+    left: 50%;
     top: 0px;
     height: auto;
     width: 100%;
@@ -757,8 +768,8 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
 }
 
 .btn-addplaceholder, .adding .btn-addplaceholder {
-    background: #D3D3D3;
-    border: 1px dashed #C0C0C0;
+    background: #F5F5F5;
+    border: 1px dashed #D3D3D3;
     overflow: hidden;
     -webkit-transition: all .4s;
     -moz-transition: all .4s;
@@ -768,7 +779,6 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     margin: 0 auto;
     margin-top: 20px;
     padding: 7px 10px;
-    border-width: 1px;
     width: 100%;
     max-height: 60px;
     opacity: 1;
@@ -807,6 +817,10 @@ select.form-control[rel="deploy"] {
     height: 45px;
 }
 
+.form-control{
+    width: auto;
+}
+
 .edititem-current {
     padding: 10px 15px;
     background: #A8ABC8;
@@ -825,12 +839,14 @@ select.form-control[rel="deploy"] {
 
 #search {
     display: block;
-    width: 100%;
+    max-width: 90%;
     border: none;
     background: #F2F2F2;
-    padding: 9px 15px;
+    padding: 12px 15px;
     margin: 0px;
     border-radius: 2px;
+    width: 100%;
+    font-size: 16px;
 }
 
 .filtertabs {
@@ -912,7 +928,7 @@ select.form-control[rel="deploy"] {
     background-color: #FFF;
 }
 
-.preview-screen .container {
+.preview-screen .content-container {
     overflow: visible;
 }
 

@@ -33,7 +33,16 @@ function sortData(entries, sortMode) {
 // Return:          true
 function positionateItemEditPopUp(ItemTop) {
 	var $itemEditor = $('.item-editor');
-	$itemEditor.css({top: ItemTop - ( ( $itemEditor.outerHeight() - 80 ) / 2 )});
+
+    var scrollPos = ItemTop - ( ( $itemEditor.outerHeight() - 80 ) / 2 );
+    if( scrollPos < 0 ){
+        scrollPos = 60;
+    }
+
+	$itemEditor.css({top: scrollPos});
+
+    $(window).scrollTop(scrollPos);
+
     return true;
 }
 
@@ -332,9 +341,9 @@ devtools.inc = {
 
 			editing = _id;
 			if(append){
-				$('.editor > ul').append(newItem);
+				$('.editor > ul.active').append(newItem);
 			}else{
-				$('.editor > ul').prepend(newItem);
+				$('.editor > ul.active').prepend(newItem);
 			}
 
 			$('.edit-it[data-id="' + editing + '"]').trigger('click');
@@ -390,8 +399,8 @@ devtools.inc = {
                     console.log("Menu from CRM is empty.");
                     devtools.inc.firstTimeMenu();
                 }else{
-                    menuData = res[0].data;
-                    menuDevData = res[0].data;
+                    menuData = res[activeMenu].data;
+                    menuDevData = res[activeMenu].data;
 					menu = res;
                     // console.log(menuData);
                     console.log("Menu from CRM is loaded successfully.");
@@ -404,103 +413,129 @@ devtools.inc = {
                 }
             }
         });
-	 }, genMenu: function(){
-	 	var items = "";
+	 },
+    generateSingleMenu: function(index){
+        // console.log(menuData[0].name);
+        var items = "";
+        menuData = menu[index].data;
+        for(i=0;i<menuData.length;i++){
+            // console.log(menuData[i].name);
+            menuData[i].target = menuData[i].target.length==0 ? "default" : menuData[i].target;
+            menuData[i].value = menuData[i].value!=undefined ? menuData[i].value : "";
+
+            if(menuData[i].type=="link"){
+                menuData[i].url = menuData[i].url.indexOf('//')>-1 || menuData[i].url.indexOf('://')>-1 || menuData[i].url.indexOf('http')>-1 ? menuData[i].url : "http://" + menuData[i].url;
+            }else{
+                //menuData[i].url = menuData[i].url.replace('https://','http://');
+            }
+            items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].url + '" class="item-title" data-target="' + menuData[i].target + '" data-id="' + menuData[i].id + '" data-value="' + menuData[i].value + '" data-type="' + menuData[i].type + '" data-showbranch="' + menuData[i].showbranch + '" data-showcorporate="' + menuData[i].showcorporate + '" data-showlosite="' + menuData[i].showlosite + '" data-original-title="' + menuData[i].original_title + '">' + menuData[i].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].id + '"><i class="devicons icon-remove"></i></a></div></div>';
+            if(menuData[i].subtree!=undefined&&menuData[i].subtree.length>0){
+                items += '<ul>';
+                for(x=0;x<menuData[i].subtree.length;x++){
+                    // console.log(menuData[i].subtree[x].name);
+                    menuData[i].subtree[x].target = menuData[i].subtree[x].target.length==0 ? "default" : menuData[i].subtree[x].target;
+                    menuData[i].subtree[x].value = menuData[i].subtree[x].value!=undefined ? menuData[i].subtree[x].value : "";
+
+                    if(menuData[i].subtree[x].type=="link"){
+                        menuData[i].subtree[x].url = menuData[i].url.indexOf('//')>-1 || menuData[i].subtree[x].url.indexOf('://')>-1 || menuData[i].subtree[x].url.indexOf('http')>-1 ? menuData[i].subtree[x].url : /*"http://" +*/ menuData[i].subtree[x].url;
+                    }else{
+                        menuData[i].subtree[x].url = menuData[i].subtree[x].url.replace('https://','');
+                    }
+                    items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].subtree[x].url + '" class="item-title" data-target="' + menuData[i].subtree[x].target + '" data-value="' + menuData[i].subtree[x].value + '" data-type="' + menuData[i].subtree[x].type + '" data-showbranch="' + menuData[i].subtree[x].showbranch + '" data-showcorporate="' + menuData[i].subtree[x].showcorporate + '" data-showlosite="' + menuData[i].subtree[x].showlosite + '" data-original-title="' + menuData[i].subtree[x].original_title + '" data-id="' + menuData[i].subtree[x].id + '">' + menuData[i].subtree[x].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].subtree[x].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].subtree[x].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].subtree[x].id + '"><i class="devicons icon-remove"></i></a></div></div></li>';
+                }
+                items += '</ul>';
+            }
+            items += '</li>';
+        }
+        $('.editor').append("<ul class='" + ( activeMenu == index ? 'active' : '' ) + "' " +
+        "data-name='" + menu[index].name + "' data-id='" + menu[index].id + "'>" + items + "</ul>");
+    },
+    genMenu: function(){
+	 	var items = "", i;
 	 	//menuData = eval(menuData);
         menuData = menuDevData;
 
         console.log(menuData);
+        for( i = 0; i < menu.length; i ++ ){
+            (function(){
+                devtools.inc.generateSingleMenu(i);
+            })(i);
+        }
 
-	 	// console.log(menuData[0].name);
-	 	for(i=0;i<menuData.length;i++){
-		// console.log(menuData[i].name);
-		menuData[i].target = menuData[i].target.length==0 ? "default" : menuData[i].target;
-		menuData[i].value = menuData[i].value!=undefined ? menuData[i].value : "";
+        Status.add("editor-ready");
+        checkPluginState();
 
-		if(menuData[i].type=="link"){
-			menuData[i].url = menuData[i].url.indexOf('//')>-1 || menuData[i].url.indexOf('://')>-1 || menuData[i].url.indexOf('http')>-1 ? menuData[i].url : "http://" + menuData[i].url;
-		}else{
-			//menuData[i].url = menuData[i].url.replace('https://','http://');
-		}
-		items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].url + '" class="item-title" data-target="' + menuData[i].target + '" data-id="' + menuData[i].id + '" data-value="' + menuData[i].value + '" data-type="' + menuData[i].type + '" data-showbranch="' + menuData[i].showbranch + '" data-showcorporate="' + menuData[i].showcorporate + '" data-showlosite="' + menuData[i].showlosite + '" data-original-title="' + menuData[i].original_title + '">' + menuData[i].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].id + '"><i class="devicons icon-remove"></i></a></div></div>';
-			if(menuData[i].subtree!=undefined&&menuData[i].subtree.length>0){ 
-				items += '<ul>';
-				for(x=0;x<menuData[i].subtree.length;x++){
-					// console.log(menuData[i].subtree[x].name);
-					menuData[i].subtree[x].target = menuData[i].subtree[x].target.length==0 ? "default" : menuData[i].subtree[x].target;
-					menuData[i].subtree[x].value = menuData[i].subtree[x].value!=undefined ? menuData[i].subtree[x].value : "";
-					
-					if(menuData[i].subtree[x].type=="link"){
-						menuData[i].subtree[x].url = menuData[i].url.indexOf('//')>-1 || menuData[i].subtree[x].url.indexOf('://')>-1 || menuData[i].subtree[x].url.indexOf('http')>-1 ? menuData[i].subtree[x].url : /*"http://" +*/ menuData[i].subtree[x].url;
-					}else{
-						menuData[i].subtree[x].url = menuData[i].subtree[x].url.replace('https://','');
-					}
-					items += '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="' + menuData[i].subtree[x].url + '" class="item-title" data-target="' + menuData[i].subtree[x].target + '" data-value="' + menuData[i].subtree[x].value + '" data-type="' + menuData[i].subtree[x].type + '" data-showbranch="' + menuData[i].subtree[x].showbranch + '" data-showcorporate="' + menuData[i].subtree[x].showcorporate + '" data-showlosite="' + menuData[i].subtree[x].showlosite + '" data-original-title="' + menuData[i].subtree[x].original_title + '" data-id="' + menuData[i].subtree[x].id + '">' + menuData[i].subtree[x].name + '</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + menuData[i].subtree[x].id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + menuData[i].subtree[x].id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + menuData[i].subtree[x].id + '"><i class="devicons icon-remove"></i></a></div></div></li>';
-				}
-				items += '</ul>';
-			}
-			items += '</li>';
-		}
-		$('.editor').append("<ul>" + items + "</ul>");
-		Status.add("editor-ready");
-		checkPluginState();
+
 	 }, events: function(){
-	 	$('body').on('click', '.move-children', function(){
-	 		var item = $(this).closest('li');
 
-	 		if(item.find('ul').length>0){
-	 			var subitems = item.find('ul').find('li');
-	 			item.after(subitems);
-	 		}
+	 	$('.body')
+            .on('click', '.move-children', function(){
+                var item = $(this).closest('li');
 
-	 		$(this).closest('li').closest('ul').closest('li').after(item);
+                if(item.find('ul').length>0){
+                    var subitems = item.find('ul').find('li');
+                    item.after(subitems);
+                }
 
-	 		Status.add('nostored');
+                $(this).closest('li').closest('ul').closest('li').after(item);
 
-	 	}).on('click', '.remove-it', function(){
-	 		var item = $(this).closest('li');
-	 		var id = $(this).attr('data-id');
-	 		item.remove();
-	 		Status.quit('editing nostored storing');
-	 		Status.add('nostored');
+                Status.add('nostored');
 
-	 		for(i=0; i<menuDevData.length; i++){
-	 			if(menuDevData[i].id==id){
-	 				menuDevData.splice(i,1);
-	 			}else{
-	 				for(x=0; x<menuDevData[i].subtree.length; x++){
-	 					if(menuDevData[i].subtree[x].id==id){
-	 						menuDevData[i].subtree.splice(x,1);
-	 					}
-	 				}
-	 			}
-	 		}
+            })
+
+            .on('click', '.remove-it', function(){
+                var item = $(this).closest('li');
+                var id = $(this).attr('data-id');
+                item.remove();
+                Status.quit('editing nostored storing');
+                Status.add('nostored');
+
+                for(i=0; i<menuDevData.length; i++){
+                    if(menuDevData[i].id==id){
+                        menuDevData.splice(i,1);
+                    }else{
+                        for(x=0; x<menuDevData[i].subtree.length; x++){
+                            if(menuDevData[i].subtree[x].id==id){
+                                menuDevData[i].subtree.splice(x,1);
+                            }
+                        }
+                    }
+                }
 
 
-	 	}).on('change', '.checkbox input[type="checkbox"]', function(){
-			if($(this).is(":checked")){
-				$(this).closest('.checkbox').addClass('checked').find('.devicons').addClass('icon-checkbox-active').removeClass('icon-checkbox');
-			}else{
-				$(this).closest('.checkbox').removeClass('checked').find('.devicons').addClass('icon-checkbox').removeClass('icon-checkbox-active');
-			}
-		}).on('click', '.minitabs a', function(){
-			$(this).parent().addClass('active').siblings().removeClass('active');
+            })
 
-			$('.minitab').eq($(this).parent().index()).addClass('active').siblings().removeClass('active');
-		}).on('click', '.edit-it', function(){
-			$('.menu-item > div').removeClass('active');
-			$(this).closest('.menu-item').find('div').first().addClass('active');
-			var _id = $(this).attr('data-id'),
-				ItemTop = $(this).closest('li').position().top;
-			Status.quit("editing");
-			Que(function(){
-				devtools.inc.editItem(_id);
+            .on('change', '.checkbox input[type="checkbox"]', function(){
+                if($(this).is(":checked")){
+                    $(this).closest('.checkbox').addClass('checked').find('.devicons').addClass('icon-checkbox-active').removeClass('icon-checkbox');
+                }else{
+                    $(this).closest('.checkbox').removeClass('checked').find('.devicons').addClass('icon-checkbox').removeClass('icon-checkbox-active');
+                }
+            })
 
-				positionateItemEditPopUp(ItemTop);
+            .on('click', '.minitabs a', function(){
+                $(this).parent().addClass('active').siblings().removeClass('active');
 
-				Status.add("editing");
-			}, 200);
-		}).on('change', '.item-editor .checkbox input[type="checkbox"]', function(){
+                $('.minitab').eq($(this).parent().index()).addClass('active').siblings().removeClass('active');
+            })
+
+            //edit item, editItem
+            .on('click', '.edit-it', function(){
+                $('.menu-item > div').removeClass('active');
+                $(this).closest('.menu-item').find('div').first().addClass('active');
+                var _id = $(this).attr('data-id'),
+                    ItemTop = $(this).closest('li').position().top;
+                Status.quit("editing");
+                Que(function(){
+                    devtools.inc.editItem(_id);
+
+                    positionateItemEditPopUp(ItemTop);
+
+                    Status.add("editing");
+                }, 200);
+            })
+
+            .on('change', '.item-editor .checkbox input[type="checkbox"]', function(){
 			Status.add("nostored");
 		}).on('keyup', '[rel="name"]', function(e){
 			if((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode == 189 || e.keyCode == 191) || e.keyCode==8){
@@ -570,57 +605,93 @@ devtools.inc = {
 
 			
 
-		}).on('click', '.btn-addplaceholder', function(){
-			if($(this).hasClass('item-append')){
-				devtools.inc.editItem(0,true);
-			}else{
-				devtools.inc.editItem(0,false);
-			}
-		}).on('click', '.btn-add', function(){
-			var _id = 'menu_' + Math.random(0,10);
-			_id = _id.replace(".",'');
-			var newItem = '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="{{link}}" class="item-title" data-target="false" data-value="0" data-type="common" data-showbranch="true" data-showcorporate="true" data-showlosite="true" data-original-title="Home" data-id="' + _id + '">Item title</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + _id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + _id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + _id + '"><i class="devicons icon-remove"></i></a></div></div></li>';
+		})
+            .on('click', '.btn-addplaceholder', function(){
+                if($(this).hasClass('item-append')){
+                    devtools.inc.editItem(0,true);
+                }else{
+                    devtools.inc.editItem(0,false);
+                }
+            })
 
-			editing = _id;
-			
-			var ul = $(this).closest('li').find('ul');
-			if(ul.length>0){
-				ul.append(newItem);
-			}else{
-				$(this).closest('li').append('<ul class="ui-sortable">' + newItem + '</ul>');
-			}
+            .on('click', '.btn-add', function(){
+                var _id = 'menu_' + Math.random(0,10);
+                _id = _id.replace(".",'');
+                var newItem = '<li class="menu-item"><div><span class="clearfix"></span><div class="opt tooltip-item move-children" title="Move to first level"><span class="devicons icon-move-children-top"></span></div><div class="sort tooltip-item" title="Drag to move"><i class="devicons icon-move-icon"></i></div> <span data-link="{{link}}" class="item-title" data-target="false" data-value="0" data-type="common" data-showbranch="true" data-showcorporate="true" data-showlosite="true" data-original-title="Home" data-id="' + _id + '">Item title</span><div class="opt-group"><a href="javascript:;" class="btn-add opt nofloat" data-id="' + _id + '"><i class="icon-add devicons"></i></a><a href="javascript:;" class="edit-it opt nofloat" data-id="' + _id + '"><i class="icon-edit devicons"></i></a><a href="javascript:;" class="remove-it opt nofloat" data-id="' + _id + '"><i class="devicons icon-remove"></i></a></div></div></li>';
 
-			$('.edit-it[data-id="' + editing + '"]').trigger('click');
-			$('.item-editor [rel="name"]').trigger('focus');
+                editing = _id;
 
-		}).on('click', '.cancel-btn', function(){
-			Status.quit("editing");
-		}).on('click', '.tabs a', function(){
-			$(this).parent().addClass('active').siblings().removeClass('active');
-			var toggle = $(this).attr('data-toggle');
-			switch (toggle){
-				case "all":
-					$('.editor li').show();
-					view = toggle;
-					break;
-				case "corporate":
-					$('.item-title[data-showbranch], .item-title[data-showlosite], .item-title[data-showcorporate]').closest('li').hide();
-					$('.item-title[data-showcorporate="true"]').closest('li').show();
-					view = toggle;
-					break;
-				case "branch":
-					$('.item-title[data-showbranch], .item-title[data-showlosite], .item-title[data-showcorporate]').closest('li').hide();
-					$('.item-title[data-showbranch="true"]').closest('li').show();
-					view = toggle;
-					break;
-				case "losite":
-					$('.item-title[data-showbranch], .item-title[data-showlosite], .item-title[data-showcorporate]').closest('li').hide();
-					$('.item-title[data-showlosite="true"]').closest('li').show();
-					view = toggle;
-					break;
+                var ul = $(this).closest('li').find('ul');
+                if(ul.length>0){
+                    ul.append(newItem);
+                }else{
+                    $(this).closest('li').append('<ul class="ui-sortable">' + newItem + '</ul>');
+                }
 
-			}
-		}).on('keyup change', '#search', function(e){
+                $('.edit-it[data-id="' + editing + '"]').trigger('click');
+                $('.item-editor [rel="name"]').trigger('focus');
+
+            })
+
+            .on('click', '.cancel-btn', function(){
+                Status.quit("editing");
+            })
+
+            .on('click', '.tabs a', function(){
+                $(this).parent().addClass('active').siblings().removeClass('active');
+                var toggle = $(this).attr('data-toggle');
+                switch (toggle){
+                    case "all":
+                        $('.editor li').show();
+                        view = toggle;
+                        break;
+                    case "corporate":
+                        $('.item-title[data-showbranch], .item-title[data-showlosite], .item-title[data-showcorporate]').closest('li').hide();
+                        $('.item-title[data-showcorporate="true"]').closest('li').show();
+                        view = toggle;
+                        break;
+                    case "branch":
+                        $('.item-title[data-showbranch], .item-title[data-showlosite], .item-title[data-showcorporate]').closest('li').hide();
+                        $('.item-title[data-showbranch="true"]').closest('li').show();
+                        view = toggle;
+                        break;
+                    case "losite":
+                        $('.item-title[data-showbranch], .item-title[data-showlosite], .item-title[data-showcorporate]').closest('li').hide();
+                        $('.item-title[data-showlosite="true"]').closest('li').show();
+                        view = toggle;
+                        break;
+
+                }
+            })
+
+            .on('change', '#show', function(){
+                var toggle = $(this).val(), $items = [];
+
+                switch (toggle){
+                    case "all":
+                        $('.editor li').show();
+                        view = toggle;
+                        break;
+                    case "corporate":
+                        $('.item-title[data-showbranch], .item-title[data-showlosite], .item-title[data-showcorporate]').closest('li').hide();
+                        $('.item-title[data-showcorporate="true"]').closest('li').show();
+                        view = toggle;
+                        break;
+                    case "branch":
+                        $('.item-title[data-showbranch], .item-title[data-showlosite], .item-title[data-showcorporate]').closest('li').hide();
+                        $('.item-title[data-showbranch="true"]').closest('li').show();
+                        view = toggle;
+                        break;
+                    case "losite":
+                        $('.item-title[data-showbranch], .item-title[data-showlosite], .item-title[data-showcorporate]').closest('li').hide();
+                        $('.item-title[data-showlosite="true"]').closest('li').show();
+                        view = toggle;
+                        break;
+
+                }
+            })
+
+			.on('keyup change', '#search', function(e){
 			if((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode == 189 || e.keyCode == 191) || e.keyCode==8 || e.keyCode==undefined){
 
 				if(colas['search']!=undefined){

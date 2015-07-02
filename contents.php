@@ -40,6 +40,7 @@ $contents = [
 
 $searchResults = array();
 $filter = strtolower($filter);
+$filter = $filter == "item title" ? "" : $filter;
 
 if( strlen($filter) > 0 ){
 

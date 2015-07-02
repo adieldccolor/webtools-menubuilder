@@ -1,4 +1,6 @@
-var devtools, Status, cola, Que, access, menuData, menuDevData, editing = 0, colas = [], view = 'all', currentSite, menu = [];
+var devtools, Status, cola, Que, access, menuData,
+    menuDevData, editing = 0, colas = [], view = 'all',
+    currentSite, menu = [], activeMenu = 0;
 
 currentSite = 'responsive_template04';
 
@@ -25,9 +27,9 @@ var checkPluginState = function(){
 
 Status = {
     Statuss: function(){
-        return $('body').attr('class');
+        return $('.body').attr('class');
     }, quit: function(statusClass){
-        $('body').removeClass(statusClass);
+        $('.body').removeClass(statusClass);
 
         var sep = statusClass.split(" ");
         for(i=0; i<sep.length; i++){
@@ -39,10 +41,10 @@ Status = {
         return this.Statuss();
     }, add: function(Status){
         if(Status==undefined){ Status = "ready"; }
-        $('body').addClass(Status);
+        $('.body').addClass(Status);
         return this.Statuss();
     }, is: function(statusClass){
-        return $('body').hasClass(statusClass);
+        return $('.body').hasClass(statusClass);
     }, notify: function(msg){
         var _id = ('noti_' + Math.random(0,10)).replace('.','');
         $('.notifications ul').append('<li id="' + _id + '"><a href="javascript:;" rel="close">&times;</a> ' + msg + '</li>');
@@ -87,7 +89,7 @@ devtools = {
             Status.quit('loading');
         }
 
-        $('body').on('click', '.signinbtn', function(e){
+        $('.body').on('click', '.signinbtn', function(e){
             e.preventDefault(); e.stopPropagation();
             devtools.checkLogin();
         }).on('submit', '#signinform', function(e){
@@ -131,10 +133,9 @@ devtools = {
                     var s = document.createElement("script");
                     s.type = "text/javascript";
                     s.src = currentURL;
-                    $("body").append(s);
+                    $(".body").append(s);
                     if(currentURL.indexOf('devtools')>-1){
                         devtools.inc.init();
-                        dropdown.create();
                     }
                 }
             })();
@@ -142,14 +143,19 @@ devtools = {
 
 
         //load settings
-        var settingsnav = "<div class='row'><div class='col-sm-6'><div class='form-group'><select rel='deploy' class='form-control'>";
+        var settingsnav = "" +
+            "<div class='form-group'>" +
+            "<select rel='deploy' class='form-control select-dropdown' style='min-width: 200px'>";
         for(i=0; i<data.menu[1].length; i++){
             settingsnav = settingsnav + ""
                 + '<option value="' + data.menu[1][i]['title'] + '">' + data.menu[1][i]['hint'] + '</option>';
         }
-        settingsnav = settingsnav + "</select></div><div class='form-group'><a href='javascript:;' class='btn btn-success' rel='deploybtn'>Deploy</a></div></div>"
-        console.log(settingsnav);
+        settingsnav = settingsnav + "</select></div><div class='form-group'><a href='javascript:;' class='btn btn-success' rel='deploybtn'>Deploy</a></div>"
+
         $('[data-layer="settings"]').append(settingsnav);
+
+        $('.only-editor').show();
+        dropdown.create();
 
 
     }, checkLogin: function(){
@@ -262,7 +268,10 @@ var insideSettingsEdit = function(modal){
     devtools.setModal("edit");
     if(!devtools.deniedAccess()){
         Status.add("open");
-        $('.itemcurrenttitle').text($('[rel="name"]').val());
+        var name = $('[rel="name"]').val();
+        name = name.toLowerCase() == "item title" ? "" : name;
+        $('.itemcurrenttitle').text(name).trigger('change');
+
         $('.itemcurrenttype').text($('[rel="type"]').text());
 
         if($('[rel="type"]').text()=="link"){
@@ -273,7 +282,7 @@ var insideSettingsEdit = function(modal){
         }else{
             $('.filtertabs a').eq(0).trigger('click');
 
-            $('#search').val($('[rel="name"]').val()).trigger('change');
+            $('#search').val($('[rel="name"]').val());
 
             $('#curl_title').val("");
             $('#curl_url').val("");
