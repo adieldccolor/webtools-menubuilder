@@ -776,10 +776,8 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     -ms-transition: all .4s;
     -o-transition: all .4s;
     transition: all .4s;
-    margin: 0 auto;
-    margin-top: 20px;
+    margin: 20px auto 0;
     padding: 7px 10px;
-    width: 100%;
     max-height: 60px;
     opacity: 1;
     visibility: visible;
@@ -966,4 +964,45 @@ select.form-control[rel="deploy"] {
         border-width: 0px;
     }
 
+}
+
+
+
+.preview-screen{
+    .navbar-brand {
+        height: 20px;
+    }
+
+    .navbar-nav {
+        > li {
+            > .dropdown-menu{
+                position: absolute;
+                list-style: none;
+                width: 200px;
+                background-color: #A8ABC8;
+                box-shadow: 0px 2px 4px rgba(40, 40, 40, 0.29);
+                display: none;
+
+                li{
+                    display: block;
+                    > a{
+                        display: block;
+                        padding: 10px 15px;
+                        color: #FFF;
+                    }
+                }
+            }
+
+            &:hover{
+                > a{
+                    background-color: #A8ABC8;
+                    color: #FFF;
+                }
+
+                > .dropdown-menu{
+                    display: block;
+                }
+            }
+        }
+    }
 }

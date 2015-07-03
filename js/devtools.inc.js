@@ -138,7 +138,7 @@ devtools.inc = {
 		return data;
 	}, previewMenu: function(view){
 
-		var m = devtools.inc.parseTree($('.editor > ul > li > div > .item-title')), mm = "";
+		var m = devtools.inc.parseTree($('.editor > ul.active > li > div > .item-title')), mm = "";
         menuDevData = m;
         menuData = menuDevData;
         parseMenuTree(m);
@@ -273,11 +273,14 @@ devtools.inc = {
         if(found){
 
 				// console.log(menuData[editIndex]);
-				$itemEditor.find('[rel="name"]').val(item.text());
-				$itemEditor.find('[rel="url"]').val(item.attr('data-link'));
-				$itemEditor.find('[rel="value"]').val(item.attr('data-value'));
-				$itemEditor.find('[rel="original_title"]').text(item.attr('data-original-title'));
-				$itemEditor.find('[rel="type"]').text(item.attr('data-type'));
+			var name = item.text();
+			name = name.toLowerCase() == "item title" ? "" : name;
+
+			$itemEditor.find('[rel="name"]').val(name);
+			$itemEditor.find('[rel="url"]').val(item.attr('data-link'));
+			$itemEditor.find('[rel="value"]').val(item.attr('data-value'));
+			$itemEditor.find('[rel="original_title"]').text(item.attr('data-original-title'));
+			$itemEditor.find('[rel="type"]').text(item.attr('data-type'));
 
 
 
@@ -381,7 +384,9 @@ devtools.inc = {
 		$('.minitabs li').first().find('a').trigger('click');
 		$('.item-editor [rel="name"]').trigger('focus');
 	}, firstTimeMenu: function(){
-		alert("Trying to find menu settings in DB we found that the table content is being used for something else, do you want to erase the content and format to use it to save menu settings?");
+		alert("Trying to find menu settings in DB we found that the table content is being " +
+			"used for something else, do you want to erase the content and format to use it to save menu settings?");
+		devtools.redirectTo('settings/create');
 	}, toggleMenus: function(){
         var menu = $('#menu').val();
         $('.editor > ul').removeClass('active');
@@ -397,6 +402,8 @@ devtools.inc = {
             url: "get.php?id=90&json=true&s=" + currentSite,
             success: function(res){
                 // console.log(res);
+                menuLoaded = true;
+
                 if(typeof res != "object"
                     || res.length==0 || res.toString().length<5
                     || res.indexOf('<')>-1 || res.indexOf('lorem')>-1){
@@ -460,11 +467,16 @@ devtools.inc = {
         menuData = menuDevData;
 
         console.log(menuData);
+
+		var menuDrop = "<option value='-1'>Create new menu</option>";
         for( i = 0; i < menu.length; i ++ ){
             (function(){
+				menuDrop += "<option value=" + i + ">" + menu[i].name + "</option>";
                 devtools.inc.generateSingleMenu(i);
             })(i);
         }
+
+		$("#menu").html(menuDrop).val(0).trigger("change");
 
         Status.add("editor-ready");
         checkPluginState();
@@ -475,8 +487,47 @@ devtools.inc = {
 	 	$('.body')
 
             .on('change', '#menu', function(){
+				if( $(this).val() == -1 ){
+					devtools.redirectTo('settings/create');
+
+					$(this).val(0).trigger('change');
+
+					return true;
+				}
+
                 devtools.inc.toggleMenus();
             })
+
+			.on('submit', '#newMenuForm', function(e){
+				e.stopPropagation();e.preventDefault();
+
+				//console.log( $(this).find(':input').serialize() + '&index=' + menu.length );
+
+				var menuName = $('#menuName').val(),
+					slug = $('#menuId').val();
+
+				if( menuName.trim() != "" || menuName.trim().length > 0 ){
+					$('.editor').append('<ul class="ui-sortable" data-name="' + menuName + '" ' +
+						'data-id="' + slug + '"></ul>');
+
+					$('#menu').append('<option value="' + menu.length + '">' + menuName + '</option>');
+					$('#menu').val(menu.length).trigger('change');
+
+					menu.push({
+						name: menuName,
+						id: slug,
+						data: []
+					});
+
+					checkPluginState();
+
+					devtools.redirectTo('home');
+				}else{
+					alert('Please fill the menu name');
+				}
+
+				return false;
+			})
 
             .on('click', '.move-children', function(){
                 var item = $(this).closest('li');
@@ -700,7 +751,7 @@ devtools.inc = {
                 }
             })
 
-			.on('keyup change', '#search', function(e){
+			.on('keyup', '#search', function(e){
 			if((e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode == 189 || e.keyCode == 191) || e.keyCode==8 || e.keyCode==undefined){
 
 				if(colas['search']!=undefined){

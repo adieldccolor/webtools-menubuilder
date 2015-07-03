@@ -3,11 +3,20 @@
 	, "menu": [
 		[
 			{
-			"title": "publish",
-			"url": "settings"
-			}, {
-			"title": "sign out",
-			"url": "settings/signout"
+				"title": "EDIT",
+				"url": "settings/menu"
+			},
+			{
+				"title": "DELETE",
+				"url": "settings/remove"
+			},
+			{
+			"title": "preview",
+			"url": "settings/preview"
+			},
+			{
+				"title": "publish",
+				"url": "settings"
 			}
 		], [
 			{

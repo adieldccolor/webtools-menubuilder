@@ -2,6 +2,9 @@
     font: 24px/20px 'Open Sans Condensed', sans-serif;
     color: #a9a9a9;
     opacity: 0.5;
+
+    max-width: 940px;
+    margin: 0 auto;
 }
 
 
@@ -37,6 +40,10 @@
 
     a{
         color: #286090;
+        text-decoration: none;
+        &.btn-primary{
+            color: #fff;
+        }
     }
 
     .form-group{
@@ -56,11 +63,12 @@
 .navigation {
     min-height: 40px;
     background-color: #e5e5e5;
-    padding: 15px 0;
+    padding: 15px 10px;
 }
 
 .layer .navigation{
     background-color: #fff;
+    padding: 15px 0;
 }
 
 .body.open {
@@ -118,9 +126,19 @@
     top: 0;
 }
 
-.navigation .right-nav ul li a {
-    line-height: 40px;
-    margin-left: 20px;
+.navigation .right-nav ul li{
+    a {
+        line-height: 40px;
+        margin-left: 8px;
+        border-right: 1px solid #C9D4DB;
+        padding-right: 8px;
+    }
+
+    &:last-child{
+        a{
+            border-right: none;
+        }
+    }
 }
 
 .navigation .left-nav > ul > li > ul {

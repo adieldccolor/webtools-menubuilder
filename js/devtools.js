@@ -1,6 +1,6 @@
 var devtools, Status, cola, Que, access, menuData,
     menuDevData, editing = 0, colas = [], view = 'all',
-    currentSite, menu = [], activeMenu = 0;
+    currentSite, menu = [], activeMenu = 0, menuLoaded = false;
 
 currentSite = 'responsive_template04';
 
@@ -14,16 +14,54 @@ var dropdown = {
     }
 };
 
+function convertToSlug(Text)
+{
+    return Text
+        .toLowerCase()
+        .replace(/[^\w ]+/g,'')
+        .replace(/ +/g,'-')
+        ;
+}
+
+function createSlug(Text)
+{
+    if( menu.length > 0 )
+    {
+        var found = false, i;
+        for( i=0; i<menu.length; i++ )
+        {
+            if( menu[i].id.toLowerCase() == convertToSlug(Text).toLowerCase() )
+            {
+                found = menu[i].id.toLowerCase();
+            }
+        }
+
+        if( found !== false )
+        {
+            Text = Text + " " + menu.length + " " + ((new Date).getMilliseconds());
+        }
+
+    }
+
+    Text = convertToSlug(Text);
+
+    return Text;
+}
+
 var checkPluginState = function(){
     // console.log('check state');
     if(typeof nestedSortable!="undefined" && typeof devtools.inc!="undefined"){
         // console.log(typeof nestedSortable!="undefined", typeof devtools.inc!="undefined", "inside not undef");
         devtools.inc.bindMenuHandle('.editor ul');
-        $('.tooltip-item').tooltip();
     }else{
         setTimeout(checkPluginState,9);
     }
 }
+
+''.trim || (String.prototype.trim = // Use the native method if available, otherwise define a polyfill:
+    function () { // trim returns a new string (which replace supports)
+        return this.replace(/^[\s\uFEFF]+|[\s\uFEFF]+$/g,'') // trim the left and right sides of the string
+    });
 
 Status = {
     Statuss: function(){
@@ -159,11 +197,10 @@ devtools = {
 
 
     }, checkLogin: function(){
-        var info = [$(this).find('[name="username"]').val(), $(this).find('[name="password"]').val()];
+        //var info = [$(this).find('[name="username"]').val(), $(this).find('[name="password"]').val()];
         $.ajax({
             url: 'js/sign.json',
             type: 'post',
-            data: {"user": info[0], "password": info[1]},
             success: function(data){
                 // console.log(data);
                 if(data.status == "Ok"){
@@ -208,6 +245,12 @@ devtools = {
 
 
 var home = function () {
+
+    if( menu.length == 0 && menuLoaded ){
+        devtools.redirectTo('settings/create');
+        return false;
+    }
+
     if(devtools.deniedAccess()){
         Status.quit('open');
         Que(function(){ devtools.redirectTo('settings/signin') },800);
@@ -233,7 +276,9 @@ var insideSettings = function (modal) {
         devtools.setModal(modal);
 
         if(devtools.deniedAccess()){
-            Status.add('open');
+            //Status.add('open');
+        devtools.checkLogin();
+
         }else{
             Status.quit('open');
             devtools.redirectTo('home');
@@ -251,6 +296,32 @@ var insideSettings = function (modal) {
         }else{
             Status.quit("open");
         }
+    }else if(modal=="create"){
+
+        $('#menuName').val('');
+        $('#menuId').val('');
+
+        devtools.setModal(modal);
+        Status.add('open');
+
+    }else if(modal=="menu"){
+
+        $('#menuNameEdited').val( $('.editor > ul.active').attr('data-name') );
+        $('#menuId').val($('.editor > ul.active').attr('data-id'));
+
+        devtools.setModal(modal);
+        Status.add('open');
+
+    }else if(modal=="remove"){
+
+        var name = $('.editor > ul.active').attr('data-name');
+
+        $('.menu-title').text(name);
+
+        devtools.setModal(modal);
+        Status.add('open');
+
+
     }else if(modal=="preview"){
         devtools.setModal(modal);
         if(!devtools.deniedAccess()){
@@ -270,7 +341,7 @@ var insideSettingsEdit = function(modal){
         Status.add("open");
         var name = $('[rel="name"]').val();
         name = name.toLowerCase() == "item title" ? "" : name;
-        $('.itemcurrenttitle').text(name).trigger('change');
+        $('.itemcurrenttitle').text(name).trigger('change keyup keydown keypress');
 
         $('.itemcurrenttype').text($('[rel="type"]').text());
 

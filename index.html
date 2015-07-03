@@ -12,6 +12,10 @@
 </head>
 <body>
 
+<h1>logo crm</h1>
+<a href="">Home</a> <a href="">option 1</a>
+
+
 <div class="body">
     <div class="navigation">
         <div class="content-container">
@@ -22,8 +26,6 @@
                     <li class="only-editor">
                         <select name="menu" id="menu" class="form-control select-dropdown" style="min-width: 150px">
                             <option value="-1">Create new +</option>
-                            <option value="0" selected>Main menu</option>
-                            <option value="1">Footer menu</option>
                         </select>
                     </li>
 
@@ -199,10 +201,10 @@
 
 
                         <div class="layer-box" data-layer="signin">
-                            <h1>SIGN IN TO CONTINUE </h1>
-                            <small>Please sign in with your EncompassCRM Account Information to Continue</small>
+                            <h1>LOADING DEPENDECIES </h1>
+                            <small>Please wait uuntil dependencies are loaded...</small>
 
-                            <form action="" id="signinform">
+                            <!--<form action="" id="signinform">
                                 <div class="form-group">
                                     <label for="username">Username</label>
                                     <input type="text" name="username" id="username" placeholder="Username or email address" tabindex="1">
@@ -214,12 +216,68 @@
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary signinbtn" value="Sign In" tabindex="1">
                                 </div>
-                            </form>
+                            </form>-->
                         </div>
 
                         <div class="layer-box" data-layer="signout">
-                            <h1>SIGNING OUT </h1>
-                            <small>Please wait a while, signing out.</small>
+                            <h1>PLEASE WAIT... </h1>
+                            <!--<small>Please wait a while, signing out.</small>-->
+                        </div>
+
+
+                        <div class="layer-box" data-layer="create">
+                            <h1>ADD NEW MENU</h1>
+                            <small>Create a new menu.</small>
+
+                            <form action="" id="newMenuForm">
+                                <div class="form-group">
+                                    <label for="menuName">Name:</label>
+                                    <input type="text" onkeyup="$('#menuId').val(createSlug($(this).val()))" name="menuName" id="menuName" placeholder="Name of the new menu" />
+                                </div>
+                                <div class="form-group hidden">
+                                    <label for="menuId">SLUG:</label>
+                                    <input type="text" name="menuId" id="menuId" placeholder="SLUG:" readonly />
+                                </div>
+
+
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary" value="Create" tabindex="1">
+                                </div>
+                            </form>
+
+                        </div>
+
+
+
+                        <div class="layer-box" data-layer="menu">
+                            <h1>EDIT MENU</h1>
+                            <small>Edit menu information</small>
+
+                            <form action="" id="editMenuForm">
+                                <div class="form-group">
+                                    <label for="menuName">Name:</label>
+                                    <input type="text" name="menuNameEdited" id="menuNameEdited" placeholder="Name of the menu" />
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary" value="Edit" tabindex="1">
+                                    <a href="#/home" class="btn btn-default">CANCEL</a>
+                                </div>
+                            </form>
+
+                        </div>
+
+
+
+
+                        <div class="layer-box" data-layer="remove">
+                            <h1>REMOVE MENU</h1>
+                            <small>Are you sure you want to remove menu: <span class="menu-title"></span></small>
+                            <div class="form-group">
+                                <a href="javascript:;" class="btn btn-primary removeMenu">DELETE</a>
+                                <a href="#/home" class="btn btn-default">CANCEL</a>
+                            </div>
+
                         </div>
 
                         <div class="layer-box" data-layer="settings">
