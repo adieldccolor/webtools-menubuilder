@@ -1270,7 +1270,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 .body a {
   color: #286090;
   text-decoration: none; }
-  .body a.btn-primary {
+  .body a.btn-primary, .body a.btn-success, .body a.btn-danger, .body a.btn-danger {
     color: #fff; }
 
 .body .form-group {

@@ -21,7 +21,6 @@
         <div class="content-container">
             <div class="left-nav">
                 <ul>
-                    <li><a href="#/home" class="icon-tools icon"><span class="devicons icon-toolsgrid"></span></a></li>
 
                     <li class="only-editor">
                         <select name="menu" id="menu" class="form-control select-dropdown" style="min-width: 150px">
@@ -257,11 +256,13 @@
                                 <div class="form-group">
                                     <label for="menuName">Name:</label>
                                     <input type="text" name="menuNameEdited" id="menuNameEdited" placeholder="Name of the menu" />
+                                    <input type="hidden" name="menuIdEdited" id="menuIdEdited" placeholder="Name of the menu" />
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="Edit" tabindex="1">
+                                    <input type="submit" class="btn btn-primary" value="Save" tabindex="1">
                                     <a href="#/home" class="btn btn-default">CANCEL</a>
+                                    <a href="javascript:;" class="btn btn-danger removeMenu">DELETE THIS MENU</a>
                                 </div>
                             </form>
 
@@ -269,16 +270,6 @@
 
 
 
-
-                        <div class="layer-box" data-layer="remove">
-                            <h1>REMOVE MENU</h1>
-                            <small>Are you sure you want to remove menu: <span class="menu-title"></span></small>
-                            <div class="form-group">
-                                <a href="javascript:;" class="btn btn-primary removeMenu">DELETE</a>
-                                <a href="#/home" class="btn btn-default">CANCEL</a>
-                            </div>
-
-                        </div>
 
                         <div class="layer-box" data-layer="settings">
                             <h1>DEPLOYMENT</h1>

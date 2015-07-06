@@ -144,7 +144,9 @@ devtools.inc = {
         parseMenuTree(m);
         m = menuDevData;
 
-		// console.log(m);
+		console.log(m);
+
+
 		for(i=0; i<m.length; i++){
 
 
@@ -157,7 +159,7 @@ devtools.inc = {
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hassubtree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hassubtree?' <span class="caret"></span>':'') + '</a>';
 				if(hassubtree){
 					mm += '<ul class="dropdown-menu" role="menu">';
-					
+
 					for(x=0; x<m[i].subtree.length; x++){
 						m[i].subtree[x].url = m[i].subtree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
 						mm += '<li><a href="' + m[i].subtree[x].url + '" ' + (m[i].subtree[x].target ? 'target="_blank"':'') + '>' + m[i].subtree[x].name + '</a></li>';
@@ -171,7 +173,7 @@ devtools.inc = {
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hassubtree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hassubtree?' <span class="caret"></span>':'') + '</a>';
 				if(hassubtree){
 					mm += '<ul class="dropdown-menu" role="menu">';
-					
+
 					for(x=0; x<m[i].subtree.length; x++){
 						m[i].subtree[x].url = m[i].subtree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
 						mm += '<li><a href="' + m[i].subtree[x].url + '" ' + (m[i].subtree[x].target ? 'target="_blank"':'') + '>' + m[i].subtree[x].name + '</a></li>';
@@ -185,7 +187,7 @@ devtools.inc = {
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hassubtree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hassubtree?' <span class="caret"></span>':'') + '</a>';
 				if(hassubtree){
 					mm += '<ul class="dropdown-menu" role="menu">';
-					
+
 					for(x=0; x<m[i].subtree.length; x++){
 						m[i].subtree[x].url = m[i].subtree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
 						mm += '<li><a href="' + m[i].subtree[x].url + '" ' + (m[i].subtree[x].target ? 'target="_blank"':'') + '>' + m[i].subtree[x].name + '</a></li>';
@@ -199,7 +201,7 @@ devtools.inc = {
 				mm += '<a href="' + m[i].url + '" ' + (m[i].target ? 'target="_blank"':'') + ' ' + (hassubtree?'class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"':'') + '>' + m[i].name + (hassubtree?' <span class="caret"></span>':'') + '</a>';
 				if(hassubtree){
 					mm += '<ul class="dropdown-menu" role="menu">';
-					
+
 					for(x=0; x<m[i].subtree.length; x++){
 						m[i].subtree[x].url = m[i].subtree[x].url.replace(/{{link}}/g, "default.aspx?s=site");
 						mm += '<li><a href="' + m[i].subtree[x].url + '" ' + (m[i].subtree[x].target ? 'target="_blank"':'') + '>' + m[i].subtree[x].name + '</a></li>';
@@ -209,16 +211,19 @@ devtools.inc = {
 				}
 			}
 
-			$('.preview-screen [role="navigation"] ul').html(mm);
 
 
 		}
+
+		$('.preview-screen [role="navigation"] ul').html(mm);
+
+
 
 
 
 	}, parseTree: function(ul){
 		var tags = [],
-			_self = this, 
+			_self = this,
 			data = [],
 			id = 0;
 		// ul.each(function(_index){
@@ -240,7 +245,7 @@ devtools.inc = {
 				}
 				// data.subtree = devtools.inc.parseTree(subtree);
 				data.subtree = subtreetags;
-		
+
 			}else{
 				// alert(data.toString(), "has not subitems");
 			}*/
@@ -258,7 +263,7 @@ devtools.inc = {
 
 
 			tags.push(data);
-		
+
 		// });
 		}
 
@@ -319,10 +324,10 @@ devtools.inc = {
 
 				$('[rel="editlink"]').attr('href', '#/settings/edit/' + id);
 
-			
+
 				editing = id;
 
-				
+
 				return true;
 
 		}else{
@@ -365,16 +370,16 @@ devtools.inc = {
 
 				$('[rel="target"]').removeClass('checked').find('input[type="checkbox"]').removeAttr('checked');
 				$('[rel="target"]').find('.devicons').removeClass('icon-checkbox-active').addClass('icon-checkbox');
-				
+
 				$('[rel="showcorporate"]').addClass('checked').find('input[type="checkbox"]').attr('checked', true);
 				$('[rel="showcorporate"]').find('.devicons').removeClass('icon-checkbox').addClass('icon-checkbox-active');
-				
+
 				$('[rel="showbranch"]').addClass('checked').find('input[type="checkbox"]').attr('checked', true);
 				$('[rel="showbranch"]').find('.devicons').removeClass('icon-checkbox').addClass('icon-checkbox-active');
-			
+
 				$('[rel="showlosite"]').addClass('checked').find('input[type="checkbox"]').attr('checked', true);
 				$('[rel="showlosite"]').find('.devicons').removeClass('icon-checkbox').addClass('icon-checkbox-active');
-		
+
 
 				devtools.redirectTo('settings/edit/' + _id);
 
@@ -388,9 +393,10 @@ devtools.inc = {
 			"used for something else, do you want to erase the content and format to use it to save menu settings?");
 		devtools.redirectTo('settings/create');
 	}, toggleMenus: function(){
-        var menu = $('#menu').val();
+        var menu = $('#menu').val(),
+			menu = $('#menu option[value="' + menu + '"]').attr('data-id');
         $('.editor > ul').removeClass('active');
-        $('.editor > ul').eq(menu).addClass('active');
+        $('.editor > ul[data-id="' + menu + '"]').addClass('active');
 	}, loadMenu: function(){
 	 	// console.log(menuData);
 	 	var _self = this;
@@ -471,7 +477,7 @@ devtools.inc = {
 		var menuDrop = "<option value='-1'>Create new menu</option>";
         for( i = 0; i < menu.length; i ++ ){
             (function(){
-				menuDrop += "<option value=" + i + ">" + menu[i].name + "</option>";
+				menuDrop += "<option value=" + i + " data-id='" + menu[i].id + "'>" + menu[i].name + "</option>";
                 devtools.inc.generateSingleMenu(i);
             })(i);
         }
@@ -498,6 +504,63 @@ devtools.inc = {
                 devtools.inc.toggleMenus();
             })
 
+			.on('click', '.removeMenu', function(e){
+				e.stopPropagation();e.preventDefault();
+
+
+				var $menu = $('.editor > ul.active'),
+					name = $menu.attr('data-name'),
+					id = $menu.attr('data-id');
+
+				$menu.remove();
+				$('#menu option[data-id="' + id + '"]').remove();
+
+				if( $('#menu option').length > 1 ){
+					$('#menu').val( $('#menu option').eq(1).attr('value'));
+				}else{
+					$('#menu').val(-1);
+					menu = [];
+				}
+
+				$('#menu').trigger('change');
+
+				devtools.redirectTo('home');
+
+				return false;
+			})
+
+			.on('submit', '#editMenuForm', function(e){
+				e.stopPropagation();e.preventDefault();
+				var menuName = $('#menuNameEdited'),
+					menuId = $('#menuIdEdited');
+
+				if( menuName.val().trim().length > 0 )
+				{
+					$('.editor > ul[data-id="' + menuId.val() + '"]').attr('data-name', menuName.val());
+
+					//$("#menu").val(2).trigger('change');
+					var $option = $('#menu option[data-id="' + menuId.val() + '"]'),
+						value = $option.attr('value');
+
+					$option.text(menuName.val());
+
+					var $clone = $option.clone();
+
+					$option.before($clone);
+					$option.remove();
+
+					$('#menu').val(value).trigger('change');
+
+					devtools.redirectTo("home");
+				}else{
+					alert("Menu name must be not empty.");
+				}
+
+
+				return false;
+			})
+
+
 			.on('submit', '#newMenuForm', function(e){
 				e.stopPropagation();e.preventDefault();
 
@@ -510,7 +573,7 @@ devtools.inc = {
 					$('.editor').append('<ul class="ui-sortable" data-name="' + menuName + '" ' +
 						'data-id="' + slug + '"></ul>');
 
-					$('#menu').append('<option value="' + menu.length + '">' + menuName + '</option>');
+					$('#menu').append('<option value="' + menu.length + '" data-id="' + slug + '">' + menuName + '</option>');
 					$('#menu').val(menu.length).trigger('change');
 
 					menu.push({
@@ -645,7 +708,7 @@ devtools.inc = {
 
 		    if (Status.is("nostored")) {
 		        var m = devtools.inc.parseTree($('.editor > ul li > div > .item-title'));
-					
+
 					$.ajax({
 					    url: 'saveContent.php?cid=90&s=' + currentSite,
 					    type: "POST",
@@ -653,7 +716,7 @@ devtools.inc = {
 						success: function(data){
 							Status.quit("nostored"); Status.add("stored");
 							Status.quit("editing");
-							
+
 							if(cola["save"]!=undefined){ clearTimeout(cola["save"]); }
 							cola["save"] = setTimeout(function(){
 								Status.quit("stored");
@@ -663,7 +726,7 @@ devtools.inc = {
 				}
 
 
-			
+
 
 		})
             .on('click', '.btn-addplaceholder', function(){
@@ -785,10 +848,10 @@ devtools.inc = {
 			$(this).parent().addClass('active').siblings().removeClass('active');
 			$('.filtertab').eq(_i).addClass('active').siblings().removeClass('active');
 		}).on('click', '.results a', function(){
-			
+
 			$(this).addClass('active').siblings().removeClass('active');
 			var number = $(this).attr('data-number'), title = $(this).find('.rtitle').text();
-			
+
 			Que(function(){
 				devtools.redirectTo("home");
 
@@ -822,9 +885,9 @@ devtools.inc = {
 		        Status.notify('This demo has no access to ' + deployto + ' server.<br>Fake notification. Keep in mind this is a demo.');
 		    } else {
 
-		       
+
                 var m = devtools.inc.parseTree($('.editor > ul > li > div > .item-title'));
-                        
+
                 $.ajax({
                     url: 'saveContent.php?cid=91&s=' + currentSite,
                     type: "POST",
@@ -838,10 +901,10 @@ devtools.inc = {
                         }, 800);
                     }
                 });
-                
+
 		    }
 		}).on('click', '[rel="close"]', function(){
-			var item = $(this).closest('li'), _id = item.attr('id'); 
+			var item = $(this).closest('li'), _id = item.attr('id');
 			if(colas[_id]!=undefined){
 				clearTimeout(colas[_id]);
 			}
@@ -851,7 +914,7 @@ devtools.inc = {
 					item.remove();
 				});
 			}, 10);
-			
+
 		}).on('click', '.preview-screen a', function(e){
 			if(!$(this).hasClass('dropdown-toggle')){
 				e.preventDefault(); e.stopPropagation();

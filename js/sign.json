@@ -7,15 +7,11 @@
 				"url": "settings/menu"
 			},
 			{
-				"title": "DELETE",
-				"url": "settings/remove"
-			},
-			{
 			"title": "preview",
 			"url": "settings/preview"
 			},
 			{
-				"title": "publish",
+				"title": "settings",
 				"url": "settings"
 			}
 		], [

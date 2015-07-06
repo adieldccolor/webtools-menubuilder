@@ -307,20 +307,10 @@ var insideSettings = function (modal) {
     }else if(modal=="menu"){
 
         $('#menuNameEdited').val( $('.editor > ul.active').attr('data-name') );
-        $('#menuId').val($('.editor > ul.active').attr('data-id'));
+        $('#menuIdEdited').val($('.editor > ul.active').attr('data-id'));
 
         devtools.setModal(modal);
         Status.add('open');
-
-    }else if(modal=="remove"){
-
-        var name = $('.editor > ul.active').attr('data-name');
-
-        $('.menu-title').text(name);
-
-        devtools.setModal(modal);
-        Status.add('open');
-
 
     }else if(modal=="preview"){
         devtools.setModal(modal);

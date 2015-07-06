@@ -41,7 +41,7 @@
     a{
         color: #286090;
         text-decoration: none;
-        &.btn-primary{
+        &.btn-primary, &.btn-success, &.btn-danger, &.btn-danger{
             color: #fff;
         }
     }
