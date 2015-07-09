@@ -47,45 +47,144 @@ function positionateItemEditPopUp(ItemTop) {
 }
 
 function findIndex(value, key, arr){
-    var index = -1, i;
+    var index = -1, i, found = false;
     for( i=0; i<arr.length; i++ ){
-        if( arr[i][key] == value ){
+        if( arr[i][key] == value && !found ){
             index = i;
-            i = arr.length;
+			found = true;
+            //i = arr.length;
         }
     }
 
     return index;
 }
 
-function setArrayValue(parent, children){
-    if( menuDevData[parent].subtree == undefined ){
-        menuDevData[parent].subtree = [];
-    }
+function log()
+{
+	if( arguments.length > 0 )
+	{
+		console.log(arguments);
+	}
+}
 
+function setArrayValue(parent, children, objectData){
 
-    //add it as children
-    menuDevData[parent].subtree.push( menuDevData[children] );
+    console.log('setArrarValue', objectData);
+    console.log('setArrarValue', menu[activeMenu].data);
 
-    //remove it from first level
-    menuDevData.splice(children, 1);
+    if( objectData.length > parent ){
+		if( typeof objectData[parent].subtree == "undefined" ){
+		objectData[parent].subtree = [];
+		}
+
+		//add it as children
+		objectData[parent].subtree.push( objectData[children] );
+
+		//remove it from first level
+		objectData.splice(children, 1);
+
+		log('adding children ', children, 'to parent', parent);
+	}
+
+	menu[activeMenu].data = objectData;
+    return objectData;
 }
 
 function parseMenuTree(data){
-    var i;
+    var i,
+        read = data[activeMenu].data,
+		parse = [],
+		activeMenuEditing = true;
 
-    for( i=0; i<data.length; i++ ){
-        if( data[i].parent_id.length > 0 ){
-            var index = findIndex(data[i].parent_id, 'id', data);
-            if(index>-1){
-                setArrayValue(index, i);
-            }
-        }
+    if( arguments.length > 2 && arguments[2] ){
+        read = data;
+		activeMenuEditing = false;
     }
+
+
+	for( i=0; i<read.length; i++ ){
+		//only fathers
+		(function(i){
+			if( read[i].parent_id.length == 0 && read[i].parent_id.length < 5 || read[i].parent_id == " ") {
+				parse.push( read[i] );
+			}
+		})(i);
+	}
+
+
+	for( i=0; i<read.length; i++ ){
+		//only fathers
+		(function(i){
+			if( read[i].parent_id.length > 0 && read[i].parent_id.length > 5 && read[i].parent_id != " ") {
+				for( var x=0; x<parse.length; x++ )
+				{
+					(function(i, x){
+						if( parse[x].id == read[i].parent_id )
+						{
+							if( typeof parse[x].subtree == "undefined" )
+							{
+								parse[x].subtree = [];
+							}
+
+							parse[x].subtree.push( read[i] );
+						}
+					})(i, x);
+				}
+			}
+		})(i);
+	}
+
+	if( activeMenuEditing )
+	{
+		menu[activeMenu].data = parse;
+	}
 
     if( arguments.length > 1 ){
         arguments[1]();
     }
+
+	return parse;
+}
+
+
+
+
+
+function deployMenu(published){
+	var published = published != undefined ? published : false;
+
+    var menuTree = [],
+        $menus = $('.editor > ul');
+
+    for( var i=0; i<$menus.length; i++ ){
+        (function(i){
+            var m = {
+                name: $menus.eq(i).attr('data-name'),
+                id: $menus.eq(i).attr('data-id'),
+                data: devtools.inc.parseTree($('> li > div > .item-title', $menus.eq(i)))
+            };
+
+            menuTree.push( m );
+        })(i);
+    }
+
+    log(menuTree);
+
+    $.ajax({
+        url: 'saveContent.php?s=' + currentSite,
+        type: "POST",
+        data: {"content": JSON.stringify(menuTree), "published": published },
+        success: function(data){
+            Status.quit("nostored"); Status.add("stored");
+            Status.quit("editing");
+
+            if(cola["save"]!=undefined){ clearTimeout(cola["save"]); }
+            cola["save"] = setTimeout(function(){
+                Status.quit("stored");
+            }, 500);
+        }
+    });
+
 }
 
 devtools.inc = {
@@ -108,6 +207,24 @@ devtools.inc = {
         });
         $(item).on('sortupdate', function(ui,event){
         	Status.add('nostored');
+
+
+            var m = devtools.inc.parseTree($('.editor > ul.active > li > div > .item-title')),
+                id = $('.editor > ul.active').attr('data-id');
+            m = parseMenuTree(m, function(){}, true);
+            m = m;
+
+            for(var i=0; i<menu.length; i++)
+            {
+                if(menu[i].id == id)
+                {
+                    console.log(m);
+                    menu[i].data = m;
+                    console.log('sort update found', menu[i].data);
+                }
+            }
+
+
 			console.log(ui,event);
         });
 
@@ -138,16 +255,17 @@ devtools.inc = {
 		return data;
 	}, previewMenu: function(view){
 
-		var m = devtools.inc.parseTree($('.editor > ul.active > li > div > .item-title')), mm = "";
-        menuDevData = m;
-        menuData = menuDevData;
-        parseMenuTree(m);
-        m = menuDevData;
+		var m = devtools.inc.parseTree($('.editor > ul.active > li > div > .item-title')),
+            mm = "";
+        m = parseMenuTree(m, function(){}, true);
+        //m = menuDevData;
 
-		console.log(m);
+        //m = m.data;
+        m = menu[activeMenu].data;
+        console.log('parseMenuTree preview', m);
 
 
-		for(i=0; i<m.length; i++){
+		for(var i=0; i<m.length; i++){
 
 
 			m[i].url = m[i].url.replace(/{{link}}/g, "default.aspx?s=site");
@@ -227,12 +345,15 @@ devtools.inc = {
 			data = [],
 			id = 0;
 		// ul.each(function(_index){
-		for(i=0; i<ul.length; i++){
+		for(var i=0; i<ul.length; i++){
 			data = [];
 			var subtree = ul.eq(i).closest('li').find('ul').find('li').find('.item-title');
 			id = ul.eq(i).attr('data-id');
 			data = devtools.inc.returnData(id);
             data.index = i;
+            data.parent_id = "";
+
+            console.log(data);
 
 			/* do not generate subtree, but push items as first level with parent reference
 			if(subtree.length > 0){
@@ -252,10 +373,11 @@ devtools.inc = {
 
             if( subtree.length > 0 )
             {
-                for( x=0; x<subtree.length; x++ ){
+                for( var x=0; x<subtree.length; x++ ){
                     var children = devtools.inc.returnData(subtree.eq(x).attr('data-id'));
                     children.parent_id = id;
                     children.index = x;
+                    console.log(children);
                     tags.push(children);
                 }
             }
@@ -267,6 +389,7 @@ devtools.inc = {
 		// });
 		}
 
+        console.log('returning tags from parseTree', tags);
 
 		// return data;
 		return tags;
@@ -393,10 +516,20 @@ devtools.inc = {
 			"used for something else, do you want to erase the content and format to use it to save menu settings?");
 		devtools.redirectTo('settings/create');
 	}, toggleMenus: function(){
-        var menu = $('#menu').val(),
-			menu = $('#menu option[value="' + menu + '"]').attr('data-id');
+        var id = $('#menu').val(),
+			id = $('#menu option[value="' + id + '"]').attr('data-id');
+
+
+        for(var i=0; i<menu.length; i++)
+        {
+            if(menu[i].id == id)
+            {
+                activeMenu = i;
+            }
+        }
+
         $('.editor > ul').removeClass('active');
-        $('.editor > ul[data-id="' + menu + '"]').addClass('active');
+        $('.editor > ul[data-id="' + id + '"]').addClass('active');
 	}, loadMenu: function(){
 	 	// console.log(menuData);
 	 	var _self = this;
@@ -410,9 +543,7 @@ devtools.inc = {
                 // console.log(res);
                 menuLoaded = true;
 
-                if(typeof res != "object"
-                    || res.length==0 || res.toString().length<5
-                    || res.indexOf('<')>-1 || res.indexOf('lorem')>-1){
+                if(typeof res != "object"){
                     console.log("Menu from CRM is empty.");
                     devtools.inc.firstTimeMenu();
                 }else{
@@ -422,11 +553,13 @@ devtools.inc = {
                     // console.log(menuData);
                     console.log("Menu from CRM is loaded successfully.");
                     function generateMenu(){
-                        devtools.inc.genMenu();
+                        setTimeout(function(){
+							devtools.inc.genMenu();
+						}, 500);
                         return true;
                     }
 
-                    parseMenuTree(menuDevData, generateMenu);
+                    menu[activeMenu].data = parseMenuTree(menu, generateMenu);
                 }
             }
         });
@@ -470,7 +603,7 @@ devtools.inc = {
     genMenu: function(){
 	 	var items = "", i;
 	 	//menuData = eval(menuData);
-        menuData = menuDevData;
+        menuData = menu;
 
         console.log(menuData);
 
@@ -507,24 +640,36 @@ devtools.inc = {
 			.on('click', '.removeMenu', function(e){
 				e.stopPropagation();e.preventDefault();
 
+				var message = "Are you sure you want to remove this menu?";
 
-				var $menu = $('.editor > ul.active'),
-					name = $menu.attr('data-name'),
-					id = $menu.attr('data-id');
+				if( confirm(message) == true )
+				{
+					var $menu = $('.editor > ul.active'),
+						name = $menu.attr('data-name'),
+						id = $menu.attr('data-id');
 
-				$menu.remove();
-				$('#menu option[data-id="' + id + '"]').remove();
+					$menu.remove();
+					$('#menu option[data-id="' + id + '"]').remove();
 
-				if( $('#menu option').length > 1 ){
-					$('#menu').val( $('#menu option').eq(1).attr('value'));
-				}else{
-					$('#menu').val(-1);
-					menu = [];
+					for(var i=0; i<menu.length; i++)
+					{
+						if(menu[i].id == id)
+						{
+							menu.splice(i, 1);
+						}
+					}
+
+					if( $('#menu option').length > 1 ){
+						$('#menu').val( $('#menu option').eq(1).attr('value'));
+					}else{
+						$('#menu').val(-1);
+						menu = [];
+					}
+
+					$('#menu').trigger('change');
+
+					devtools.redirectTo('home');
 				}
-
-				$('#menu').trigger('change');
-
-				devtools.redirectTo('home');
 
 				return false;
 			})
@@ -609,21 +754,27 @@ devtools.inc = {
             .on('click', '.remove-it', function(){
                 var item = $(this).closest('li');
                 var id = $(this).attr('data-id');
-                item.remove();
-                Status.quit('editing nostored storing');
-                Status.add('nostored');
 
-                for(i=0; i<menuDevData.length; i++){
-                    if(menuDevData[i].id==id){
-                        menuDevData.splice(i,1);
-                    }else{
-                        for(x=0; x<menuDevData[i].subtree.length; x++){
-                            if(menuDevData[i].subtree[x].id==id){
-                                menuDevData[i].subtree.splice(x,1);
-                            }
-                        }
-                    }
-                }
+				var message = "Are you sure you want to remove this menu item?";
+
+				if( confirm(message) == true )
+				{
+					item.remove();
+					Status.quit('editing nostored storing');
+					Status.add('nostored');
+
+					for(var i=0; i<menu[activeMenu].data.length; i++){
+						if(menu[activeMenu].data[i].id==id){
+							menu[activeMenu].data.splice(i,1);
+						}else{
+							for(var x=0; x<menu[activeMenu].data[i].subtree.length; x++){
+								if(menu[activeMenu].data[i].subtree[x].id==id){
+									menu[activeMenu].data[i].subtree.splice(x,1);
+								}
+							}
+						}
+					}
+				}
 
 
             })
@@ -707,23 +858,15 @@ devtools.inc = {
 
 
 		    if (Status.is("nostored")) {
-		        var m = devtools.inc.parseTree($('.editor > ul li > div > .item-title'));
 
-					$.ajax({
-					    url: 'saveContent.php?cid=90&s=' + currentSite,
-					    type: "POST",
-					    data: {"content": JSON.stringify(m)},
-						success: function(data){
-							Status.quit("nostored"); Status.add("stored");
-							Status.quit("editing");
+						Status.quit("nostored"); Status.add("stored");
+						Status.quit("editing");
 
-							if(cola["save"]!=undefined){ clearTimeout(cola["save"]); }
-							cola["save"] = setTimeout(function(){
-								Status.quit("stored");
-							}, 500);
-						}
-					});
-				}
+						if(cola["save"]!=undefined){ clearTimeout(cola["save"]); }
+						cola["save"] = setTimeout(function(){
+							Status.quit("stored");
+						}, 500);
+			}
 
 
 

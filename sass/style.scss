@@ -399,6 +399,12 @@ Item editor section
         font-size: 18px;
         color: #8A92B8;
         width: 100%;
+        padding: 9px 2px;
+        text-indent: 8px;
+        &:focus{
+            background-color: #C4C6D5;
+            color: #5A638E;
+        }
     }
 
     .minitabs {
@@ -455,7 +461,7 @@ Item editor section
     font-family: "Open Sans", serif;
     background-color: #F7F8FA;
     border: 1px solid #CDCEDF;
-    padding: 10px;
+    padding: 10px 10px;
     line-height: 14px;
     vertical-align: middle;
 }
@@ -475,10 +481,11 @@ Item editor section
     height: 14px;
     background-color: #7179A8;
     border-radius: 14px;
-    padding: 10px;
+    padding: 3px 10px;
     vertical-align: middle;
     display: inline-block;
-    line-height: 1px;
+    line-height: 11px;
+    color: #FFF;
 }
 
 .open-modal .devicons {

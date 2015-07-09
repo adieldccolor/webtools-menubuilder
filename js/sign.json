@@ -11,6 +11,10 @@
 			"url": "settings/preview"
 			},
 			{
+			"title": "save",
+			"url": "settings/save"
+			},
+			{
 				"title": "settings",
 				"url": "settings"
 			}
