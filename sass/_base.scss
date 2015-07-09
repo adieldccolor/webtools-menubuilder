@@ -81,6 +81,13 @@
 
 .navigation .left-nav ul li{
     padding: 0 5px 0 0;
+
+    label{
+        color: #E1E3F9;
+        display: block;
+        font-size: 15px;
+    }
+
 }
 
 .navigation .right-nav, .navigation .right-nav ul {
@@ -127,6 +134,7 @@
 }
 
 .navigation .right-nav ul li{
+
     a {
         line-height: 40px;
         margin-left: 8px;

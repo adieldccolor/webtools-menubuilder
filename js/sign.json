@@ -3,7 +3,7 @@
 	, "menu": [
 		[
 			{
-				"title": "EDIT",
+				"title": "EDIT MENU",
 				"url": "settings/menu"
 			},
 			{
@@ -13,10 +13,6 @@
 			{
 			"title": "save",
 			"url": "settings/save"
-			},
-			{
-				"title": "settings",
-				"url": "settings"
 			}
 		], [
 			{

@@ -1298,6 +1298,10 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 
 .navigation .left-nav ul li {
   padding: 0 5px 0 0; }
+  .navigation .left-nav ul li label {
+    color: #E1E3F9;
+    display: block;
+    font-size: 15px; }
 
 .navigation .right-nav, .navigation .right-nav ul {
   float: right; }
