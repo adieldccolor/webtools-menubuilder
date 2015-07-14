@@ -243,6 +243,24 @@
 
 
                                 <div class="form-group">
+                                    <label for="menuName">Type:</label>
+                                    <div>
+                                        <select name="menuType" id="menuType" class="form-control select-dropdown">
+                                            <option value="">Select menu type</option>
+                                            <option value="header">Header menu</option>
+                                            <option value="footer">Footer menu</option>
+                                            <option value="sidebar">Sidebar menu</option>
+                                            <option value="other">Other menu</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    &nbsp;
+                                </div>
+
+
+                                <div class="form-group">
                                     <input type="submit" class="btn btn-primary" value="Create" tabindex="1">
                                 </div>
                             </form>
@@ -263,10 +281,31 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="Save" tabindex="1">
-                                    <a href="#/home" class="btn btn-default">CANCEL</a>
-                                    <a href="javascript:;" class="btn btn-danger removeMenu">DELETE THIS MENU</a>
+                                    <label for="menuName">Type:</label>
+                                   <div>
+                                       <select name="menuTypeEdited" id="menuTypeEdited" class="form-control select-dropdown">
+                                           <option value="">Select menu type</option>
+                                           <option value="header">Header menu</option>
+                                           <option value="footer">Footer menu</option>
+                                           <option value="sidebar">Sidebar menu</option>
+                                           <option value="other">Other menu</option>
+                                       </select>
+                                   </div>
                                 </div>
+
+                                <div class="form-group">
+                                    &nbsp;
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary" value="Save" tabindex="1">
+
+                                    <a href="javascript:;" class="btn btn-danger removeMenu">Delete</a>
+
+                                    <a href="#/home" class="btn btn-default">Cancel</a>
+                                </div>
+
+
                             </form>
 
                         </div>
@@ -386,6 +425,24 @@
         </div>
     </div>
     <div class="layer-bg"></div>
+
+
+    <div class="confirmation-modal" id="confirm-modal">
+        <div class="overlay"></div>
+
+        <div class="confirmation-modal-content">
+            <div class="confirmation-modal-content-wrapper">
+                <div class="content-wrapper">
+                    <div class="modal-title"></div>
+                    <div class="modal-message"></div>
+                </div>
+
+                <div class="content-footer">
+                    <a href="javascript:;" class="modal-confirmation-accept">Agree</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Core libraries -->
@@ -393,6 +450,7 @@
 <script src="js/director.min.js"></script>
 <script src="js/select2.min.js"></script>
 <script src="js/TweenMax.min.js"></script>
+<script src="js/modal-dialog.js"></script>
 <script src="js/devtools.js"></script>
 </body>
 </html>

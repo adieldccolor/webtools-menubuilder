@@ -494,7 +494,13 @@ Item editor section
 }
 
 a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
-    border-color: #b3b4cf;
+    border-color: #9092CB;
+    color: #7179A8;
+    background-color: #F4F4F4;
+
+    .text-title, .devicons{
+        color: #7179A8;
+    }
 }
 
 .item-editor {

@@ -598,7 +598,8 @@ devtools.inc = {
             items += '</li>';
         }
         $('.editor').append("<ul class='" + ( activeMenu == index ? 'active' : '' ) + "' " +
-        "data-name='" + menu[index].name + "' data-id='" + menu[index].id + "'>" + items + "</ul>");
+        "data-name='" + menu[index].name + "' data-id='" + menu[index].id + "' " +
+            "data-type='" + menu[index].type + "'>" + items + "</ul>");
     },
     genMenu: function(){
 	 	var items = "", i;
@@ -610,7 +611,8 @@ devtools.inc = {
 		var menuDrop = "<option value='-1'>Create new menu</option>";
         for( i = 0; i < menu.length; i ++ ){
             (function(){
-				menuDrop += "<option value=" + i + " data-id='" + menu[i].id + "'>" + menu[i].name + "</option>";
+				menuDrop += "<option value=" + i + " " +
+                    "data-id='" + menu[i].id + "' data-type='" + menu[i].type + "'>" + menu[i].name + "</option>";
                 devtools.inc.generateSingleMenu(i);
             })(i);
         }
@@ -642,7 +644,7 @@ devtools.inc = {
 
 				var message = "Are you sure you want to remove this menu?";
 
-				if( confirm(message) == true )
+				function onConfirm()
 				{
 					var $menu = $('.editor > ul.active'),
 						name = $menu.attr('data-name'),
@@ -670,6 +672,15 @@ devtools.inc = {
 
 					devtools.redirectTo('home');
 				}
+
+
+				$('#confirm-modal').confirm({
+					title: 'Delete menu',
+					message: message,
+					onAccept: onConfirm,
+					cancelButton: 'Cancel',
+					acceptButton: 'Yes, remove it'
+				});
 
 				return false;
 			})
@@ -712,26 +723,34 @@ devtools.inc = {
 				//console.log( $(this).find(':input').serialize() + '&index=' + menu.length );
 
 				var menuName = $('#menuName').val(),
-					slug = $('#menuId').val();
+					slug = $('#menuId').val(),
+                    menuType = $('#menuType').val();
 
-				if( menuName.trim() != "" || menuName.trim().length > 0 ){
+				if( menuType.trim().length > 1 && menuName.trim() != "" && menuName.trim().length > 0 ){
 					$('.editor').append('<ul class="ui-sortable" data-name="' + menuName + '" ' +
-						'data-id="' + slug + '"></ul>');
+						'data-id="' + slug + '" data-type="' + menuType + '"></ul>');
 
-					$('#menu').append('<option value="' + menu.length + '" data-id="' + slug + '">' + menuName + '</option>');
+					$('#menu').append('<option value="' + menu.length + '" ' +
+                        'data-id="' + slug + '" data-type="' + menuType + '">' + menuName + '</option>');
 					$('#menu').val(menu.length).trigger('change');
 
 					menu.push({
 						name: menuName,
 						id: slug,
+                        type: menuType,
 						data: []
 					});
 
 					checkPluginState();
 
+					$('#menuType').val("").trigger('change');
+
 					devtools.redirectTo('home');
 				}else{
-					alert('Please fill the menu name');
+                    $('#confirm-modal').confirm({
+                        title: 'Error',
+                        message: 'Please fill the menu name and menu type.'
+                    });
 				}
 
 				return false;
@@ -757,7 +776,7 @@ devtools.inc = {
 
 				var message = "Are you sure you want to remove this menu item?";
 
-				if( confirm(message) == true )
+				function onConfirmItem()
 				{
 					item.remove();
 					Status.quit('editing nostored storing');
@@ -775,6 +794,17 @@ devtools.inc = {
 						}
 					}
 				}
+
+                $('#confirm-modal').confirm({
+                    title: 'Remove menu item',
+                    message: message,
+                    onAccept: onConfirmItem,
+                    cancelButton: 'Cancel',
+                    acceptButton: 'Yes, remove it'
+                });
+
+
+
 
 
             })
