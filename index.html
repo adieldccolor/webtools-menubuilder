@@ -255,6 +255,7 @@
                                     </div>
                                 </div>
 
+
                                 <div class="form-group">
                                     &nbsp;
                                 </div>
@@ -275,13 +276,13 @@
 
                             <form action="" id="editMenuForm">
                                 <div class="form-group">
-                                    <label for="menuName">Name:</label>
+                                    <label for="menuNameEdited">Name:</label>
                                     <input type="text" name="menuNameEdited" id="menuNameEdited" placeholder="Name of the menu" />
                                     <input type="hidden" name="menuIdEdited" id="menuIdEdited" placeholder="Name of the menu" />
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="menuName">Type:</label>
+                                    <label for="menuTypeEdited">Type:</label>
                                    <div>
                                        <select name="menuTypeEdited" id="menuTypeEdited" class="form-control select-dropdown">
                                            <option value="">Select menu type</option>
@@ -293,12 +294,23 @@
                                    </div>
                                 </div>
 
+
+                                <div class="form-group">
+                                    <label for="menuPublishedEdited">Publish status</label>
+                                    <div>
+                                        <select name="menuPublishedEdited" id="menuPublishedEdited" class="form-control select-dropdown">
+                                            <option value="true">Published</option>
+                                            <option value="false">Unpublished</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     &nbsp;
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="Save" tabindex="1">
+                                    <input type="submit" class="btn btn-primary" value="Update" tabindex="1">
 
                                     <a href="javascript:;" class="btn btn-danger removeMenu">Delete</a>
 

@@ -307,7 +307,9 @@ var insideSettings = function (modal) {
     }else if(modal=="menu"){
 
         $('#menuNameEdited').val( $('.editor > ul.active').attr('data-name') );
-        $('#menuIdEdited').val($('.editor > ul.active').attr('data-id'));
+        $('#menuIdEdited').val($('.editor > ul.active').attr('data-id') );
+        $('#menuTypeEdited').val($('.editor > ul.active').attr('data-type')).trigger('change');
+        $('#menuPublishedEdited').val($('.editor > ul.active').attr('data-published')).trigger('change');
 
         devtools.setModal(modal);
         Status.add('open');

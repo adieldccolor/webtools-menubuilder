@@ -161,6 +161,8 @@ function deployMenu(published){
             var m = {
                 name: $menus.eq(i).attr('data-name'),
                 id: $menus.eq(i).attr('data-id'),
+                type: $menus.eq(i).attr('data-type'),
+                published: $menus.eq(i).attr('data-published') == true,
                 data: devtools.inc.parseTree($('> li > div > .item-title', $menus.eq(i)))
             };
 
@@ -171,9 +173,9 @@ function deployMenu(published){
     log(menuTree);
 
     $.ajax({
-        url: 'saveContent.php?s=' + currentSite,
+        url: 'saveContent.php',
         type: "POST",
-        data: {"content": JSON.stringify(menuTree), "published": published },
+        data: {"content": JSON.stringify(menuTree), "siteid": currentSite },
         success: function(data){
             Status.quit("nostored"); Status.add("stored");
             Status.quit("editing");
@@ -185,6 +187,30 @@ function deployMenu(published){
         }
     });
 
+}
+
+
+
+
+//update on every event
+function updateMenuOnTheFly(){
+    Status.add('nostored');
+
+
+    var m = devtools.inc.parseTree($('.editor > ul.active > li > div > .item-title')),
+        id = $('.editor > ul.active').attr('data-id');
+    m = parseMenuTree(m, function(){}, true);
+    m = m;
+
+    for(var i=0; i<menu.length; i++)
+    {
+        if(menu[i].id == id)
+        {
+            console.log(m);
+            menu[i].data = m;
+            console.log('sort update found', menu[i].data);
+        }
+    }
 }
 
 devtools.inc = {
@@ -206,23 +232,8 @@ devtools.inc = {
 			revert: 100
         });
         $(item).on('sortupdate', function(ui,event){
-        	Status.add('nostored');
 
-
-            var m = devtools.inc.parseTree($('.editor > ul.active > li > div > .item-title')),
-                id = $('.editor > ul.active').attr('data-id');
-            m = parseMenuTree(m, function(){}, true);
-            m = m;
-
-            for(var i=0; i<menu.length; i++)
-            {
-                if(menu[i].id == id)
-                {
-                    console.log(m);
-                    menu[i].data = m;
-                    console.log('sort update found', menu[i].data);
-                }
-            }
+            updateMenuOnTheFly();
 
 
 			console.log(ui,event);
@@ -599,7 +610,7 @@ devtools.inc = {
         }
         $('.editor').append("<ul class='" + ( activeMenu == index ? 'active' : '' ) + "' " +
         "data-name='" + menu[index].name + "' data-id='" + menu[index].id + "' " +
-            "data-type='" + menu[index].type + "'>" + items + "</ul>");
+            "data-type='" + menu[index].type + "' data-published='" + menu[index].published + "'>" + items + "</ul>");
     },
     genMenu: function(){
 	 	var items = "", i;
@@ -612,7 +623,8 @@ devtools.inc = {
         for( i = 0; i < menu.length; i ++ ){
             (function(){
 				menuDrop += "<option value=" + i + " " +
-                    "data-id='" + menu[i].id + "' data-type='" + menu[i].type + "'>" + menu[i].name + "</option>";
+                    "data-id='" + menu[i].id + "' data-type='" + menu[i].type + "' " +
+					"data-published='" + menu[i].published + "'>" + menu[i].name + "</option>";
                 devtools.inc.generateSingleMenu(i);
             })(i);
         }
@@ -688,11 +700,17 @@ devtools.inc = {
 			.on('submit', '#editMenuForm', function(e){
 				e.stopPropagation();e.preventDefault();
 				var menuName = $('#menuNameEdited'),
-					menuId = $('#menuIdEdited');
+					menuId = $('#menuIdEdited'),
+					menuType = $('#menuTypeEdited'),
+					menuPublished = $('#menuPublishedEdited');
 
-				if( menuName.val().trim().length > 0 )
+				if( menuName.val().trim().length > 0 && menuType.val().trim().length > 0 )
 				{
-					$('.editor > ul[data-id="' + menuId.val() + '"]').attr('data-name', menuName.val());
+					$('.editor > ul[data-id="' + menuId.val() + '"]')
+						.attr('data-name', menuName.val())
+						.attr('data-type', menuType.val())
+						.attr('data-published', menuPublished.val())
+					;
 
 					//$("#menu").val(2).trigger('change');
 					var $option = $('#menu option[data-id="' + menuId.val() + '"]'),
@@ -709,7 +727,10 @@ devtools.inc = {
 
 					devtools.redirectTo("home");
 				}else{
-					alert("Menu name must be not empty.");
+					$('#confirm-modal').confirm({
+						title: 'Error',
+						message: 'Please fill the menu name and menu type.'
+					});
 				}
 
 
@@ -895,6 +916,9 @@ devtools.inc = {
 						if(cola["save"]!=undefined){ clearTimeout(cola["save"]); }
 						cola["save"] = setTimeout(function(){
 							Status.quit("stored");
+
+                            updateMenuOnTheFly();
+
 						}, 500);
 			}
 
