@@ -24,15 +24,6 @@
 			}
 		]
 	], "dependencies": [
-			{
-			"type": "text/javascript",
-			"url": "js/jquery-ui.js"
-			}, {
-			"type": "text/javascript",
-			"url": "js/jquery.mjs.nestedSortable.js"
-			}, {
-			"type": "text/javascript",
-			"url": "js/devtools.inc.js"
-			}
+
 		]
 }

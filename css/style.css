@@ -2123,7 +2123,8 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
   transition: all 0.4s cubic-bezier(0.22, 0.2, 0.23, 0.99);
   margin-top: 0;
   position: absolute;
-  left: 50%; }
+  left: 50%;
+  top: 50px; }
 
 .editing .item-editor {
   opacity: 1;
@@ -2150,13 +2151,15 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
 
 .editing .editor, .editing .btn-addplaceholder, .editing .btn-addplaceholder-anchor, .editing .navigation, .editing .herolead {
   opacity: 0.4;
-  pointer-events: none;
   cursor: default;
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   -ms-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s; }
+
+.editing .layer .navigation {
+  opacity: 1; }
 
 .btn-save, .herolead .right-nav ul li a.btn-save {
   opacity: 0;
@@ -2422,7 +2425,7 @@ select.form-control[rel="deploy"] {
   border: none;
   background: #F2F2F2;
   padding: 12px 15px;
-  margin: 0px;
+  margin: 15px 0px 0px;
   border-radius: 2px;
   width: 100%;
   font-size: 16px; }

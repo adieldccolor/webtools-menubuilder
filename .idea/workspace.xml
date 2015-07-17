@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25bf0a93-7ac8-4194-bfe7-91c17aa9aec0" name="Default" comment="deploy first level items and sortData via index attribute on each item">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/devtools.inc.js" afterPath="$PROJECT_DIR$/js/devtools.inc.js" />
+      <change type="DELETED" beforePath="C:\apacheServer\www\elliemaePreview\webtools\js\devtools.inc.js" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/devtools.js" afterPath="$PROJECT_DIR$/js/devtools.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/sign.json" afterPath="$PROJECT_DIR$/js/sign.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sass/style.scss" afterPath="$PROJECT_DIR$/sass/style.scss" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="webtools.iws" />
@@ -29,8 +32,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.0">
-              <caret line="312" column="94" selection-start-line="312" selection-start-column="94" selection-end-line="312" selection-end-column="94" />
+            <state vertical-scroll-proportion="-11.5">
+              <caret line="470" column="55" selection-start-line="470" selection-start-column="55" selection-end-line="470" selection-end-column="55" />
               <folding>
                 <element signature="n#style#0;n#select#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#select#0;n#li#1;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -49,18 +52,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="devtools.inc.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/devtools.inc.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.965517">
-              <caret line="920" column="0" selection-start-line="920" selection-start-column="0" selection-end-line="920" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="sentStructure.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sentStructure.json">
           <provider selected="true" editor-type-id="text-editor">
@@ -74,28 +65,28 @@
       <file leaf-file-name="_base.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sass/_base.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="619" column="8" selection-start-line="619" selection-start-column="8" selection-end-line="619" selection-end-column="43" />
+            <state vertical-scroll-proportion="-2.6545455">
+              <caret line="517" column="44" selection-start-line="517" selection-start-column="41" selection-end-line="517" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sign.json" pinned="false" current-in-tab="true">
+      <file leaf-file-name="sign.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/sign.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21326165">
-              <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="6" column="38" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.scss" pinned="false" current-in-tab="false">
+      <file leaf-file-name="style.scss" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sass/style.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="501" column="23" selection-start-line="501" selection-start-column="23" selection-end-line="501" selection-end-column="23" />
+            <state vertical-scroll-proportion="-1.3681818">
+              <caret line="862" column="23" selection-start-line="862" selection-start-column="23" selection-end-line="862" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -104,10 +95,10 @@
       <file leaf-file-name="devtools.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/devtools.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.37931">
-              <caret line="198" column="7" selection-start-line="198" selection-start-column="7" selection-end-line="198" selection-end-column="7" />
+            <state vertical-scroll-proportion="-10.206897">
+              <caret line="1321" column="49" selection-start-line="1321" selection-start-column="49" selection-end-line="1321" selection-end-column="49" />
               <folding>
-                <marker date="1436990600626" expanded="true" signature="5701:5717" placeholder="..." />
+                <marker date="1437148484454" expanded="true" signature="49632:49648" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -145,13 +136,13 @@
         <option value="$PROJECT_DIR$/js/practica2.js" />
         <option value="$PROJECT_DIR$/get.php" />
         <option value="$PROJECT_DIR$/sentStructure.json" />
-        <option value="$PROJECT_DIR$/sass/style.scss" />
         <option value="$PROJECT_DIR$/sass/_base.scss" />
         <option value="$PROJECT_DIR$/js/modal-dialog.js" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/js/devtools.inc.js" />
-        <option value="$PROJECT_DIR$/js/devtools.js" />
         <option value="$PROJECT_DIR$/js/sign.json" />
+        <option value="$PROJECT_DIR$/js/devtools.inc.js" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/js/devtools.js" />
+        <option value="$PROJECT_DIR$/sass/style.scss" />
       </list>
     </option>
   </component>
@@ -226,6 +217,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -289,7 +281,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -431,13 +422,13 @@
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.5718954" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.42810458" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.23518164" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.7648184" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32843137" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26143792" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14542484" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14542484" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.507722" order="2" side_tool="true" content_ui="tabs" />
@@ -514,7 +505,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="308" column="34" selection-start-line="308" selection-start-column="34" selection-end-line="308" selection-end-column="34" />
           <folding>
-            <marker date="1436990600626" expanded="true" signature="5701:5717" placeholder="..." />
+            <marker date="1437148484454" expanded="true" signature="49632:49648" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -533,16 +524,6 @@
           <folding>
             <element signature="n#style#0;n#select#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#li#1;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/devtools.inc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -613,16 +594,6 @@
           <folding>
             <element signature="n#style#0;n#select#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#li#1;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/devtools.inc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -700,16 +671,6 @@
           <folding>
             <element signature="n#style#0;n#select#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#li#1;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/devtools.inc.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -812,7 +773,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="22" selection-start-line="3" selection-start-column="22" selection-end-line="3" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -820,22 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
           <caret line="21" column="29" selection-start-line="0" selection-start-column="0" selection-end-line="103" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sass/style.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="501" column="23" selection-start-line="501" selection-start-column="23" selection-end-line="501" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sass/_base.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="619" column="8" selection-start-line="619" selection-start-column="8" selection-end-line="619" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -855,10 +799,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/js/sign.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="38" selection-start-line="6" selection-start-column="38" selection-end-line="6" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.0">
-          <caret line="312" column="94" selection-start-line="312" selection-start-column="94" selection-end-line="312" selection-end-column="94" />
+        <state vertical-scroll-proportion="-11.5">
+          <caret line="470" column="55" selection-start-line="470" selection-start-column="55" selection-end-line="470" selection-end-column="55" />
           <folding>
             <element signature="n#style#0;n#select#0;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#select#0;n#li#1;n#ul#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -866,30 +818,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/devtools.inc.js">
+    <entry file="file://$PROJECT_DIR$/sass/_base.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.965517">
-          <caret line="920" column="0" selection-start-line="920" selection-start-column="0" selection-end-line="920" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-2.6545455">
+          <caret line="517" column="44" selection-start-line="517" selection-start-column="41" selection-end-line="517" selection-end-column="44" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/devtools.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.37931">
-          <caret line="198" column="7" selection-start-line="198" selection-start-column="7" selection-end-line="198" selection-end-column="7" />
+        <state vertical-scroll-proportion="-10.206897">
+          <caret line="1321" column="49" selection-start-line="1321" selection-start-column="49" selection-end-line="1321" selection-end-column="49" />
           <folding>
-            <marker date="1436990600626" expanded="true" signature="5701:5717" placeholder="..." />
+            <marker date="1437148484454" expanded="true" signature="49632:49648" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/sign.json">
+    <entry file="file://$PROJECT_DIR$/sass/style.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21326165">
-          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+        <state vertical-scroll-proportion="-1.3681818">
+          <caret line="862" column="23" selection-start-line="862" selection-start-column="23" selection-end-line="862" selection-end-column="23" />
           <folding />
         </state>
       </provider>
