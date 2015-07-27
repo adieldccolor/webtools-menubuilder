@@ -31,7 +31,7 @@ $.fn.confirm = function(settings){
     //set message
     $modal.find('.modal-message').text("").hide();
     if( hasMessage ){
-        $modal.find('.modal-message').text(settings.message).show();
+        $modal.find('.modal-message').html(settings.message).show();
     }
 
     //set buttons

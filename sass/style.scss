@@ -596,28 +596,34 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     vertical-align: middle;
     padding: 7px 0;
     margin-top: 5px;
+
+    input[type="checkbox"] {
+        visibility: hidden;
+        position: absolute;
+    }
+
+    label {
+        padding-left: 0px;
+        font-size: 18px;
+        font-family: "Open Sans", serif;
+        color: #bbbbbb;
+    }
+
+    .devicons {
+        margin-right: 5px;
+        position: relative;
+        top: 2px;
+    }
+
+    &.checked{
+        label, label:focus, label:hover{
+            color: #8f8f8f;
+        }
+    }
+
 }
 
-.checkbox input[type="checkbox"] {
-    visibility: hidden;
-}
 
-.checkbox label {
-    padding-left: 0px;
-    font-size: 18px;
-    font-family: "Open Sans", serif;
-    color: #bbbbbb;
-}
-
-.checkbox .devicons {
-    margin-right: 5px;
-    position: relative;
-    top: 2px;
-}
-
-.checkbox.checked label, .checkbox label:hover, .checkbox label:focus {
-    color: #8f8f8f;
-}
 
 .minitab {
     display: none;
@@ -804,10 +810,11 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     -ms-transform: scale(1);
     -o-transform: scale(1);
     transform: scale(1);
+    padding: 13px 10px;
 }
 
 .btn-addplaceholder:hover, a:focus .btn-addplaceholder {
-    padding: 13px 10px;
+    border-color: #286090;
 }
 
 .btn-addplaceholder.item-append {

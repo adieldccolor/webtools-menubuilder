@@ -45,9 +45,24 @@
             </div>
             <div class="right-nav">
                 <ul>
-                    <li><a href="#/settings/menu">EDIT MENU</a></li>
-                    <li><a href="#/settings/preview">PREVIEW</a></li>
-                    <li><a href="#/settings/settings">SAVE</a></li>
+                    <li class="has-tooltip" title="It means that the current menu will be public, or not.">
+                        <label for="">&nbsp;</label>
+                        <div class="form-group checkbox" rel="published">
+                            <label for="published"><span class="devicons icon-checkbox"></span> Publish</label>
+                            <input type="checkbox" name="published" id="published">
+                        </div>
+
+                    </li>
+                    <li>
+                        <label for="">&nbsp;</label>
+                        <a href="#/settings/preview">Preview</a></li>
+                    <li>
+                        <label for="">&nbsp;</label>
+                        <a href="#/settings/menu">Edit Menu</a></li>
+                    <li class="has-tooltip" title="This action will save all your menu settings.">
+                        <label for="">&nbsp;</label>
+                        <a href="#/settings/save">
+                        Save</a></li>
                 </ul>
             </div>
             <div class="clearfix"></div>
