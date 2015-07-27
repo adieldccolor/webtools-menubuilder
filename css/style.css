@@ -1691,8 +1691,8 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
 
 .status .progressbg {
   position: relative;
-  height: 3px;
-  width: 10%;
+  height: 5px;
+  width: 15%;
   background: #7790A8;
   box-shadow: 0px 0px 20px 15px #7790A8;
   -webkit-animation: progress 0.9s infinite;
@@ -1825,10 +1825,12 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
             overflow: hidden; }
             .confirmation-modal .confirmation-modal-content .confirmation-modal-content-wrapper .content-wrapper .modal-message ul li {
               line-height: 20px;
-              padding: 2px 0; }
+              padding: 2px 10px 2px 0;
+              display: inline-block; }
               .confirmation-modal .confirmation-modal-content .confirmation-modal-content-wrapper .content-wrapper .modal-message ul li i {
                 vertical-align: middle;
-                margin-right: 10px; }
+                margin-right: 5px;
+                top: 0; }
       .confirmation-modal .confirmation-modal-content .confirmation-modal-content-wrapper .content-footer {
         padding: 10px;
         background-color: #BDC0EC; }
