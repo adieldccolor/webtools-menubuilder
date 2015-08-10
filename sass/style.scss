@@ -127,8 +127,8 @@
             margin: 5px 10px 10px;
             background: #54585C;
             border-radius: 5px;
-            font-size: 15px;
-            font-family: "Open Sans", serif;
+            font-size: 12px;
+            font-family: $font;
 
             .notifications ul li [rel="close"] {
                 float: right;
@@ -221,7 +221,7 @@
                 height: 50px;
                 font-size: 18px;
                 color: #a09f9f;
-                font-family: "Open Sans", serif;
+                font-family: $font;
                 padding: 0px 20px;
                 line-height: 50px;
                 position: relative;
@@ -246,6 +246,7 @@
                     max-width: 60%;
                     text-overflow: ellipsis;
                     overflow: hidden;
+                    font-size: 14px;
 
                     /* .editor ul li >div span.item-title */
                     &.item-title {
@@ -380,17 +381,57 @@ Item editor section
 */
 .item-editor {
     background-color: #FFF;
-    margin-top: 20px;
-    padding: 15px;
-    position: relative;
-    margin-bottom: 50px;
+
+
+    width: 500px;
+    margin-left: -250px;
+    left: 50%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    overflow: auto;
+
+    .item-editor-wrapper{
+        margin: 15px;
+
+        .divider{
+            height: 1px;
+            background-color: #F2F2F2;
+            margin: 10px 0;
+        }
+
+        .section-title{
+            text-transform: uppercase;
+            font-family: $font;
+            font-size: 12px;
+            padding: 0px 0px 0px;
+            color: #949bbe;
+            margin: 30px 0 -5px;
+            display: block;
+            clear: both;
+
+        }
+
+
+        .item-editor-header{
+            border-bottom: 1px solid #F2F2F2;
+            margin: -15px -15px 10px;
+            padding: 15px 15px 0px;
+        }
+
+
+    }
 
     h4 {
         color: #a09f9f;
         font-size: 18px;
-        font-family: "Open Sans", serif;
+        font-family: $font;
         text-transform: uppercase;
-        margin: 0 0 10px;
+        margin: -15px 0 0;
+        height: 45px;
+        line-height: 45px;
     }
 
     input[type="text"] {
@@ -432,8 +473,8 @@ Item editor section
 }
 
 .item-editor .minitabs ul li a {
-    font-family: "Open Sans", serif;
-    font-size: 14px;
+    font-family: $font;
+    font-size: 12px;
     text-transform: uppercase;
     text-decoration: none;
     padding: 0px 10px 5px;
@@ -457,8 +498,8 @@ Item editor section
 }
 
 .open-modal {
-    font-size: 14px;
-    font-family: "Open Sans", serif;
+    font-size: 12px;
+    font-family: $font;
     background-color: #F7F8FA;
     border: 1px solid #CDCEDF;
     padding: 10px 10px;
@@ -506,27 +547,18 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
 .item-editor {
     opacity: 0;
     visibility: hidden;
-    max-width: 500px;
     -webkit-transition: all .4s cubic-bezier(.22, .2, .23, .99);
     -moz-transition: all .4s cubic-bezier(.22, .2, .23, .99);
     -ms-transition: all .4s cubic-bezier(.22, .2, .23, .99);
     -o-transition: all .4s cubic-bezier(.22, .2, .23, .99);
     transition: all .4s cubic-bezier(.22, .2, .23, .99);
-    margin-top: 0;
-
-    position: absolute;
-    left: 50%;
-
-    top: 50px;
+    margin-top: -20px;
 }
 
 .editing .item-editor {
     opacity: 1;
     visibility: visible;
-    left: 50%;
-    top: 0px;
-    height: auto;
-    width: 100%;
+    margin-top: 10px;
     -webkit-transform: none;
     -moz-transform: none;
     -ms-transform: none;
@@ -539,9 +571,7 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     transform-origin: 100% 0%;
     box-shadow: 0px 0px 10px #000;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    position: absolute;
-    margin-left: -180px;
-    z-index: 99;
+    z-index: 999;
 }
 
 .editing .editor, .editing .btn-addplaceholder, .editing .btn-addplaceholder-anchor, .editing .navigation, .editing .herolead {
@@ -594,10 +624,10 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
 
 .checkbox {
     vertical-align: middle;
-    padding: 7px 0;
-    margin-top: 5px;
+    padding: 0px 0;
+    margin-top: 10px;
 
-    input[type="checkbox"] {
+    input[type="checkbox"], input {
         visibility: hidden;
         position: absolute;
     }
@@ -605,14 +635,15 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     label {
         padding-left: 0px;
         font-size: 18px;
-        font-family: "Open Sans", serif;
+        font-family: $font;
         color: #bbbbbb;
     }
 
     .devicons {
         margin-right: 5px;
         position: relative;
-        top: 2px;
+        top: 0px;
+        vertical-align: middle;
     }
 
     &.checked{
@@ -668,7 +699,7 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     background-color: #A1A8CA;
     border-radius: 50%;
     text-align: center;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 30px;
     color: #4B5792;
     text-indent: -45px;
@@ -772,23 +803,18 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     width: 100%;
 }
 
-.btn-save-inside {
-    display: none;
-    margin: -13px 0px 0px 10px;
-    padding: 10px 15px;
-    background: #9298B8;
-    color: #FFF;
-    opacity: 0.9;
-    right: 15px;
-    position: relative;
-}
-
 .btn-save-inside:hover, .btn-save-inside:focus {
     opacity: 1;
 }
 
-.nostored .btn-save-inside {
-    display: block;
+body {
+    .nostored {
+        button[type="submit"].btn, button[type="button"], .btn, a.btn, a.btn:link{
+            &.btn-save-inside {
+                display: block;
+            }
+        }
+    }
 }
 
 .btn-addplaceholder, .adding .btn-addplaceholder {
@@ -821,19 +847,6 @@ a:hover .open-modal, a:focus .open-modal, .a:active .open-modal {
     margin-bottom: 50px;
 }
 
-.cancel-btn {
-    padding: 4px 10px;
-    height: 26px;
-    line-height: 20px;
-    margin: 0;
-    border-radius: 0px 0px 0px 2px;
-    position: absolute;
-    right: 0;
-    background: #F5AFAF;
-    color: #FFF;
-    border-width: 0px;
-    top: 0;
-}
 
 select.form-control[rel="deploy"] {
     font-size: 20px;
@@ -943,8 +956,8 @@ select.form-control[rel="deploy"] {
     padding: 10px;
     min-height: 200px;
     margin-bottom: 40px;
-    font-family: "Open Sans", serif;
-    font-size: 14px;
+    font-family: $font;
+    font-size: 12px;
 }
 
 .preview-screen .navbar {
@@ -957,18 +970,6 @@ select.form-control[rel="deploy"] {
 
 @media screen and (max-width: 767px) {
 
-    .item-editor {
-        overflow: hidden;
-        max-height: 0px;
-    }
-
-    .editing .item-editor {
-        position: relative;
-        left: 0;
-        margin-left: 0;
-        max-width: 100%;
-        max-height: 500px;
-    }
 
     .cancel-btn {
         position: relative;

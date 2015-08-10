@@ -1,13 +1,15 @@
+$font: 'Open Sans', sans-serif;
+
 .body {
-    font: 24px/20px 'Open Sans Condensed', sans-serif;
+    font: 14px $font;
     color: #a9a9a9;
     opacity: 0.5;
 
     max-width: 992px;
     margin: 0 auto;
 
-    *{
-        font-family: 'Open Sans Condensed', sans-serif;
+    *, .select2-container, .select2-container *{
+        font-family: $font;
     }
 }
 
@@ -42,12 +44,18 @@
         text-align: center;
     }
 
-    a{
+    a, button, input[type="button"], input[type="submit"]{
         color: #286090;
         text-decoration: none;
         &.btn-primary, &.btn-success, &.btn-danger, &.btn-danger{
             color: #fff;
             box-shadow: none;
+            background-color: #939BE8;
+        }
+
+        &.btn-default{
+            background-color: #ECECEC;
+            color: #637083;
         }
     }
 
@@ -58,12 +66,13 @@
             cursor: pointer;
             display: block;
             margin-bottom: 5px;
-            font-size: 20px;
+            font-size: 14px;
         }
     }
 
     h1{
-        margin: 5px 0 15px;
+        margin: 5px 0 10px;
+        font-size: 26px;
     }
 }
 
@@ -97,7 +106,7 @@
     label{
         color: #E1E3F9;
         display: block;
-        font-size: 15px;
+        font-size: 12px;
     }
 
 }
@@ -125,9 +134,10 @@
     height: 40px;
     background-color: #a8abc8;
     color: #fff;
-    border-radius: 5px;
+    border-radius: 0px;
     line-height: 40px;
     padding: 0 20px;
+    font-size: 16px;
 }
 
 .navigation .left-nav > ul > li a.icon-tools.icon {
@@ -135,7 +145,7 @@
 }
 
 .navigation .left-nav > ul > li a.icon-tools span {
-    font-family: "Plaster", serif;
+    font-family: $font;
     line-height: 0px;
     position: relative;
     top: -2px;
@@ -149,7 +159,7 @@
 
     .checkbox {
         vertical-align: middle;
-        padding: 7px 15px 5px 5px;
+        padding: 10px 15px 0px 5px;
         margin-top: 0px;
         margin-right: 8px;
 
@@ -162,8 +172,8 @@
 
         label {
             padding-left: 0px;
-            font-family: 'Open Sans Condensed', sans-serif;
-            font-size: 20px;
+            font-family: $font;
+            font-size: 14px;
             color: #e9e9e9;
             &:hover, &:focus{
 
@@ -198,8 +208,8 @@
         padding-right: 8px;
         color: #FFF;
         box-shadow: 3px 0px 2px -2px #B7BBDA;
-        font-family: 'Open Sans Condensed', sans-serif;
-        font-size: 20px;
+        font-family: $font;
+        font-size: 14px;
         text-transform: none;
     }
 
@@ -244,7 +254,7 @@
 .navigation .left-nav > ul > li > ul li a {
     color: #A8ABC8;
     padding: 8px 15px 8px 10px;
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .navigation .left-nav > ul > li > ul li a:hover, .navigation .left-nav > ul > li > ul li a:focus {
@@ -396,7 +406,7 @@
     display: block;
 }
 
-.open .layer-bg, .open .layer {
+.open .layer-bg, .open .layer, .editing .layer-bg {
     -webkit-transition: all .4s;
     -moz-transition: all .4s;
     -ms-transition: all .4s;
@@ -442,6 +452,11 @@
     z-index: 999;
     visibility: hidden;
     opacity: 0;
+
+    input[type="text"], select{
+        min-width: 50%;
+    }
+
 }
 
 .layer .content-container {
@@ -469,7 +484,7 @@
     margin: 0;
 }
 
-.open .layer-bg {
+.open .layer-bg, .editing .layer-bg {
     opacity: 0.4;
     visibility: visible;
 }
@@ -493,18 +508,58 @@
 body button[type="submit"].btn, body button[type="button"], body .btn, body a.btn, body a.btn:link {
     border-radius: 2px;
     border-width: 0px;
-    font-size: 20px;
     box-shadow: none;
     min-width: inherit;
     background-image: none;
-    font-size: 20px !important;
-    font-family: 'Open Sans Condensed', sans-serif;
-    padding: 6px 12px;
+    font-size: 14px !important;
+    font-family: $font;
+    padding: 7px 10px;
+    border-radius: 3px;
+
+    &.cancel-btn {
+        border-radius: 0px;
+        border-width: 0px;
+        width: 20px;
+        text-align: center;
+        background-color: transparent;
+        color: #F5AFAF;
+        border-left: 1px solid #F2F2F2;
+        margin: -15px -15px 0px 0px;
+
+        height: 45px;
+        line-height: 45px;
+        padding-top: 0;
+        padding-bottom: 0;
+        font-weight: 600;
+        font-size: 1.2em;
+
+        &:hover, &:focus{
+            background-color: #F5AFAF;
+            color: #fff;
+            border-color: #F5AFAF;
+        }
+    }
+
+
+    &.btn-save-inside {
+        display: none;
+        margin: -15px 0px 0px 0px;
+        background: #9298B8;
+        color: #FFF;
+        opacity: 0.9;
+        border-radius: 0px;
+        position: relative;
+
+        height: 45px;
+        line-height: 45px;
+        padding: 0 16px;
+    }
+
 }
 
 .form-group {
     margin-top: 10px;
-    font-size: 20px;
+    font-size: 14px;
 }
 
 .form-group input[type="text"], .form-group input[type="password"] {
@@ -512,16 +567,22 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
     margin-top: 5px;
     border: 2px solid #98AABE;
     font-size: 14px;
-    font-family: "Open Sans", serif;
+    font-family: $font;
     padding: 8px 10px;
     width: 300px;
     /*max-width: 90%;*/
 }
 
-.layer small {
-    display: block;
-    margin-bottom: 40px;
-    font-size: 22px;
+.layer {
+    small {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 12px;
+    }
+
+    .form-group{
+        margin-bottom: 15px;
+    }
 }
 
 @-webkit-keyframes progress {
@@ -570,8 +631,8 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
 }
 
 .loading .status {
-    visibility: visible;
-    opacity: 1;
+    //visibility: visible;
+    //opacity: 1;
 }
 
 .status .progressbg {
@@ -629,7 +690,7 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #FFF;
     line-height: 35px;
-    font-size: 22px;
+    font-size: 14px;
     padding-right: 40px;
 }
 
@@ -646,10 +707,10 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
 
     .t-c{
         position: absolute;
-        width: 150px;
+        width: 200px;
         bottom: 100%;
         left: 50%;
-        margin-left: -75px;
+        margin-left: -100px;
         opacity: 0.9;
         z-index: 999;
         opacity: 0;
@@ -673,7 +734,7 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
             margin-top: -10px;
             color: #fff;
             background-color: #000000;
-            font-family: "Open Sans Condensed", " Open Sans", sans-serif;
+            font-family: $font;
             font-size: 14px;
         }
     }
@@ -736,7 +797,7 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
 
         .confirmation-modal-content-wrapper{
             position: relative;
-            font-size: 20px;
+            font-size: 14px;
             display: inline-block;
             min-width: 200px;
             box-shadow: 0px 10px 15px #5A5A5A;
@@ -749,10 +810,10 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
                 color: #323437;
 
                 .modal-title{
-                    font-size: 26px;
+                    font-size: 16px;
                     font-weight: 600;
                     color: #000;
-                    margin: 0px 0px 20px;
+                    margin: 0px 0px 10px;
                 }
 
                 .modal-message{
@@ -765,7 +826,7 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
                         max-height: 300px;
                         overflow: hidden;
                         li{
-                            line-height: 20px;
+                            line-height: 14px;
                             padding: 2px 10px 2px 0;
                             display: inline-block;
 
@@ -785,7 +846,7 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
 
                 a{
                     display: inline-block;
-                    font-size: 18px;
+                    font-size: 14px;
                     padding: 7px 10px;
                     margin-right: 10px;
                     border-radius: 3px;
@@ -816,4 +877,95 @@ body button[type="submit"].btn, body button[type="button"], body .btn, body a.bt
 .devicons.icon-checkbox-active.for-list{
     width: 18px;
     background-position: 50% -671px;
+}
+
+
+
+
+
+/* PACE */
+.pace {
+    -webkit-pointer-events: none;
+    pointer-events: none;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+
+    background-color: rgba(100%, 100%, 100%, 0.3);
+    height: 3px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999999999;
+}
+
+.pace-inactive {
+    display: none;
+}
+
+.pace .pace-progress {
+    background: #25a5ee;
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    height: 3px;
+}
+
+.pace .pace-progress-inner {
+    display: block;
+    position: absolute;
+    right: 0px;
+    width: 100px;
+    height: 100%;
+    box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+    opacity: 1.0;
+    -webkit-transform: rotate(3deg) translate(0px, -4px);
+    -moz-transform: rotate(3deg) translate(0px, -4px);
+    -ms-transform: rotate(3deg) translate(0px, -4px);
+    -o-transform: rotate(3deg) translate(0px, -4px);
+    transform: rotate(3deg) translate(0px, -4px);
+}
+
+.pace .pace-activity {
+    display: block;
+    position: fixed;
+    z-index: 2000;
+    top: 15px;
+    right: 15px;
+    width: 14px;
+    height: 14px;
+    border: solid 3px transparent;
+    border-top-color: #29d;
+    border-left-color: #29d;
+    border-radius: 10px;
+    -webkit-animation: pace-spinner 400ms linear infinite;
+    -moz-animation: pace-spinner 400ms linear infinite;
+    -ms-animation: pace-spinner 400ms linear infinite;
+    -o-animation: pace-spinner 400ms linear infinite;
+    animation: pace-spinner 400ms linear infinite;
+}
+
+@-webkit-keyframes pace-spinner {
+    0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-moz-keyframes pace-spinner {
+    0% { -moz-transform: rotate(0deg); transform: rotate(0deg); }
+    100% { -moz-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-o-keyframes pace-spinner {
+    0% { -o-transform: rotate(0deg); transform: rotate(0deg); }
+    100% { -o-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-ms-keyframes pace-spinner {
+    0% { -ms-transform: rotate(0deg); transform: rotate(0deg); }
+    100% { -ms-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@keyframes pace-spinner {
+    0% { transform: rotate(0deg); transform: rotate(0deg); }
+    100% { transform: rotate(360deg); transform: rotate(360deg); }
 }

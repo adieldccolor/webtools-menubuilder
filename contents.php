@@ -2,7 +2,7 @@
 
 function getContent($filter = ""){
 $contents = [
-    ['Content' => [
+    ["Content" => [
             "Number"=> 1,
             "ID"=> "81c68e15-b12f-4ffd-8be7-c175dede6c1d",
             "Name"=> "Our Company- About Us (#1)"

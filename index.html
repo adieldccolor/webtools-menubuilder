@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Type" content="txt/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DEV|TOOLS</title>
-    <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400,300|Open+Sans+Condensed:300|Plaster'>
+    <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans:400,300'>
     <link rel="stylesheet" href="css/select2.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -114,59 +114,7 @@
                     </a>
 
                 </div>
-                <div class="settings-column">
 
-                    <div class="item-editor">
-                        <a href="javascript:" class="pull-left cancel-btn btn btn-sm btn-default">&times;</a>
-                        <h4>edit item <a href="javascript:" class="btn-save-inside pull-right" onclick="$('.btn-save').trigger('click')">save</a>
-                        </h4>
-                        <div class="form-group">
-                            <input type="text" name="title" id="title" value="Loan Programs" rel="name">
-                        </div>
-                        <div class="minitabs">
-                            <ul>
-                                <li class="active"><a href="#/home">general</a></li>
-                                <li><a href="#/home">settings</a></li>
-                            </ul>
-                        </div>
-
-                        <!-- devtools.inc.parseTree($('.editor > ul > li > div > .item-title')) -->
-                        <div class="minitab active">
-                            <a href="#/settings/edit/" rel="editlink"><div class="form-group open-modal">
-                                <div class="pull-right">
-                                    <span class="devicons icon-modal tooltip-item" title="Click&nbsp;to&nbsp;change"></span>
-                                </div>
-                                <span class="text-title" rel="original_title">Loan Programs</span>
-                                <span class="label label-type" rel="type">CRM</span>
-                            </div></a>
-                            <input type="hidden" name="value" id="value" rel="value">
-                            <input type="hidden" name="url" id="url" rel="url">
-
-                            <div class="form-group checkbox" rel="target">
-                                <label for="target"><span class="devicons icon-checkbox"></span> OPEN LINK IN NEW TAB</label>
-                                <input type="checkbox" name="target" id="target">
-                            </div>
-                        </div>
-                        <div class="minitab">
-                            <div class="form-group checkbox" rel="showcorporate">
-                                <label for="showcorporate"><span class="devicons icon-checkbox"></span> SHOW IN CORPORATE</label>
-                                <input type="checkbox" name="showcorporate" id="showcorporate">
-                            </div>
-                            <div class="form-group checkbox" rel="showbranch">
-                                <label for="showbranch"><span class="devicons icon-checkbox"></span> SHOW IN BRANCHES</label>
-                                <input type="checkbox" name="showbranch" id="showbranch">
-                            </div>
-                            <div class="form-group checkbox" rel="showlosite">
-                                <label for="showconsultant"><span class="devicons icon-checkbox"></span> SHOW IN LO SITE</label>
-                                <input type="checkbox" name="showconsultant" id="showconsultant">
-                            </div>
-
-                        </div>
-
-                        <!-- end of item editor -->
-                    </div>
-
-                </div>
 
             </div>
         </div>
@@ -184,7 +132,93 @@
 
 
 
+    <div class="item-editor">
 
+        <div class="item-editor-wrapper">
+
+            <div class="item-editor-header">
+                <a href="javascript:" class="pull-right cancel-btn btn btn-sm btn-default">&times;</a>
+                <a href="javascript:" class="btn btn-save-inside pull-right" onclick="$('.btn-save').trigger('click')">save</a>
+                <h4>edit item</h4>
+            </div>
+
+
+            <div class="form-group">
+                <input type="text" name="title" id="title" value="" rel="name" placeholder="Type here the menu item title">
+            </div>
+
+
+            <!-- devtools.inc.parseTree($('.editor > ul > li > div > .item-title')) -->
+            <div class="minitab active">
+                <!--<a href="#/settings/edit/" rel="editlink" style="display:none"><div class="form-group open-modal">
+                    <div class="pull-right">
+                        <span class="devicons icon-modal tooltip-item" title="Click&nbsp;to&nbsp;change"></span>
+                    </div>
+                    <span class="text-title" rel="original_title">Loan Programs</span>
+                    <span class="label label-type" rel="type">CRM</span>
+                </div></a>-->
+
+
+                <input type="hidden" name="value" id="value" rel="value">
+                <input type="hidden" name="url" id="url" rel="url">
+
+                <div class="section-title">configure target url</div>
+                <div class="divider"></div>
+
+                <div class="form-group checkbox" rel="link-type">
+                    <label for="link-type"><span class="devicons icon-checkbox"></span> IS CONTENT EDITOR PAGE</label>
+                    <input type="checkbox" name="link-type" id="link-type">
+                </div>
+
+
+                <div class="content-tab-block" rel="content-type">
+                    <div class="single-block">
+                        <div class="form-group" rel="link-url">
+                            <label for="link-url">URL TO</label>
+                            <input type="text" name="link-url" id="link-url" value="" rel="link-url" placeholder="Input the url here. E.g.: http://google.com">
+                        </div>
+
+                        <div class="form-group checkbox" rel="target">
+                            <label for="target"><span class="devicons icon-checkbox"></span> OPEN LINK IN NEW TAB</label>
+                            <input type="checkbox" name="target" id="target">
+                        </div>
+                    </div>
+                    <div class="single-block" style="display: none">
+                        <div class="form-group" rel="link">
+                            <label for="link">LINK TO</label>
+                            <select name="link" id="link" class="form-control select-dropdown with-search" style="width: 96%">
+                                <option value="1" selected="selected">Select a content</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="section-title">configure item visibility</div>
+                <div class="divider"></div>
+
+
+                <div class="form-group checkbox" rel="showcorporate">
+                    <label for="showcorporate"><span class="devicons icon-checkbox"></span> SHOW IN CORPORATE</label>
+                    <input type="checkbox" name="showcorporate" id="showcorporate">
+                </div>
+                <div class="form-group checkbox" rel="showbranch">
+                    <label for="showbranch"><span class="devicons icon-checkbox"></span> SHOW IN BRANCHES</label>
+                    <input type="checkbox" name="showbranch" id="showbranch">
+                </div>
+                <div class="form-group checkbox" rel="showlosite">
+                    <label for="showconsultant"><span class="devicons icon-checkbox"></span> SHOW IN LO SITE</label>
+                    <input type="checkbox" name="showconsultant" id="showconsultant">
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <!-- end of item editor -->
+    </div>
 
 
 
@@ -211,7 +245,7 @@
                     <div class="navigation">
                         <div class="left-nav">
                             <ul>
-                                <li><a href="#/home" class="icon-tools"><span><</span> Back</a></li>
+                                <li><a href="#/home" class="icon-tools">Back</a></li>
                             </ul>
                         </div>
                     </div>
